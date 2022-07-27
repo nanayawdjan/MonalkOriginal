@@ -1,0 +1,69 @@
+{% extends 'school/admin/adminbase.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+
+
+
+<style>
+  body{
+  background: #bba14f;
+}
+
+input{
+  padding: 7px;
+  margin: 7px;
+}
+a:hover{
+  color: #eec10b;
+  transition: all 0.3s ease;
+}
+#master:hover{
+  color: #eec10b;
+  transition: all 0.3s ease;
+}
+#id_student{
+  padding: 7px;
+  margin: 7px;
+  font-size: 18px;
+}
+.thing{
+  display: block;
+}
+#master{
+  margin-left: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
+  cursor: pointer;
+  font-size: 15px;
+  background: #FDFC47;  
+  background: -webkit-linear-gradient(to right, #24FE41, #FDFC47);
+  background: linear-gradient(to right, #24FE41, #FDFC47);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+}
+form {
+  padding-left: 20px;
+}
+</style>
+
+<form method="POST">
+  {% csrf_token %}
+    <p>NAME: {{form2.student}}</p>
+    <p>AM: {{form2.pay}}</p>
+    <p>DA: {{form2.when_made}}</p>
+    <p>ML: {{form2.balance}}</p>
+    <p>AR: {{form2.depth}}</p>
+  {% for i in student_pay %}
+    {% if forloop.last %}
+    <h3>ML: {{i.balance}}</h3>
+    <h3>AR: {{i.depth}}</h3>
+    {% endif %}
+  {% endfor %}
+  <a><input type="submit" name="submit" value="Save" id="master"></a>
+</form>
+
+
+{% endblock content %}

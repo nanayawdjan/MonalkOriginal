@@ -1,0 +1,119 @@
+{% extends 'school/admin/adminbase.html' %}
+{% load static %}
+{% block content %}
+<head>
+
+  <!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
+
+  <style>
+    body{
+background: #bba14f;
+}
+h3 {
+padding: 10px;
+margin: 10px;
+color: #ffffff;
+}
+h2 {
+padding: 10px;
+margin: 10px;
+color: red;
+}
+table, td {
+border: 1px solid black;
+padding-top: 10px;
+padding-bottom: 10px;
+background-color: gray;
+text-align: center;
+color: #ffffff;
+}
+th {
+border: 1px solid black;
+padding-top: 10px;
+padding-bottom: 10px;
+background-color: black;
+text-align: center;
+color: #ffffff;
+}
+
+table {
+width: 100%;
+border-collapse: collapse;
+}
+button{
+padding: 10px;
+margin: 15px;
+border: none;
+outline: none;
+border-radius: 4px;
+background: #FDFC47;  
+background: -webkit-linear-gradient(to right, #24FE41, #FDFC47);
+background: linear-gradient(to right, #24FE41, #FDFC47);
+
+}
+.deleteitem{
+background: #ee0b1b;
+color: #fff;
+cursor: pointer;
+padding: 10px;
+}
+.pay{
+    background: #4caf50;
+    color: #fff;
+    cursor: pointer;
+    padding: 5px;
+}
+.deleteite{
+background: #ee0b1b;
+color: #fff;
+cursor: pointer;
+padding: 5px;
+
+}
+a{
+text-decoration: none;
+color: #ffffff;
+}
+
+.results tr[visible='false'],
+.no-result{
+  display: none;
+}
+
+.results tr[visible='true']{
+  display: table-row;
+}
+
+</style>
+<section class="hom"> 
+<div class="text">
+
+  {% include 'school/admin/filter_list.html' %}
+    <table class="table table-bordered border-primary results">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Class</th>
+      <th>Contact</th>
+      <th>Fee</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for s in students %}
+    <tr>
+      <td class="tablestyle"><strong><a>{{s.get_name}}</a></strong></td>
+      <td class="tablestyle"><strong>{{s.cl}}</strong></td>
+      <td class="tablestyle"><strong>{{s.mobile}}</strong></td>
+      <td class="tablestyle"><strong>{{s.fee}}</strong></td>
+      <td><a class="btn btn-primary btn-xs" href="{% url 'approve-student' s.id  %}"><span class="glyphicon glyphicon-edit"></span></a>
+      <a class="btn btn-danger btn-xs" href="{% url 'delete-student' s.id  %}"><span class="glyphicon glyphicon-trash"></span></a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </div>
+</section>
+
+{% endblock%}

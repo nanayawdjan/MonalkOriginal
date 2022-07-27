@@ -1,0 +1,152 @@
+{% extends "school/others/homebase.html" %}
+{% block content %}
+
+{% load widget_tweaks %}
+<html lang="en" dir="ltr">
+
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Monalk Educational Complex</title>
+  <style type="text/css">
+    body {
+      color: #aa082e;
+      background-color: #BBA14F;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    a:link {
+      text-decoration: none;
+    }
+
+    .note {
+      text-align: center;
+      height: 80px;
+      background: black;
+      color: #fff;
+      font-weight: bold;
+      line-height: 80px;
+    }
+
+    .form-content {
+      padding: 5%;
+      border: 1px solid #fff;
+      margin-bottom: 2%;
+    }
+
+    .form-control {
+      border-radius: 1.5rem;
+    }
+
+    .btnSubmit {
+      border: none;
+      border-radius: 1.5rem;
+      padding: 1%;
+      width: 20%;
+      cursor: pointer;
+      background: black;
+      color: #fff;
+    }
+    .text-center{
+      font-size: 25px;
+    }
+    @media(max-width: 767px){
+    .btnSubmit {
+      border: none;
+      border-radius: 1.5rem;
+      padding: 1%;
+      width: 30%;
+      cursor: pointer;
+      background: black;
+      color: #fff;
+    }
+    .text-center {
+      font-size: 15px;
+    }
+ 
+}   
+
+  </style>
+
+  <br>
+  <br>
+  <br>
+  <br>
+
+
+
+
+  <!--- signup page for teacher by admin(sumit)  ---------->
+    <form method="post">
+    {% csrf_token %}
+    <div class="container register-form">
+      <div class="form">
+        <div class="note">
+          <p>New Admission To School</p>
+        </div>
+
+        <div class="form-content">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                {% render_field form2.roll class="form-control" placeholder="Admission Number" %}
+              </div>
+              <div class="form-group">
+                {% render_field form1.username class="form-control" placeholder="Username" %}
+              </div>
+              <div class="form-group">
+                {% render_field form2.date_of_admission class="form-control" placeholder="Date of Admission" %}
+              </div>
+              <div class="form-group">
+                {% render_field form1.first_name class="form-control" placeholder="First Name" %}
+              </div>
+              <div class="form-group">
+                {% render_field form1.last_name class="form-control" placeholder="Last Name" %}
+              </div>
+              <div class="form-group">
+                {% render_field form2.date_of_birth class="form-control" placeholder="Date of Birth" %}
+              </div>
+              <div class="form-group">
+                {% render_field form2.gender class="form-control" placeholder="Gender" %}
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="form-group">
+                {% render_field form2.mother class="form-control" placeholder="Mother" %}
+              </div>
+              <div class="form-group">
+                {% render_field form2.father class="form-control" placeholder="Father" %}
+              </div>
+              <div class="form-group">
+                {% render_field form2.mobile class="form-control" placeholder="Mobile" %}
+              </div>
+              <div class="form-group">
+                {% render_field form2.residence class="form-control" placeholder="Residence" %}
+              </div>
+              <div class="form-group">
+                {% render_field form2.cl class="form-control" placeholder="Class" %}
+              </div>
+              <div class="form-group">
+                {% render_field form2.fee class="form-control" placeholder="Fee" %}
+              </div>
+              <div class="form-group">
+                {% render_field form1.password class="form-control" type="password" placeholder="Password" %}
+              </div> 
+              <div class="form-group">
+                {% render_field form2.passport class="form-control" placeholder="Passport" %}
+              </div>
+
+            </div>
+          </div>
+           <button type="submit" class="btnSubmit">Take Admission</button>
+          <div class="text-center">Already have an account? <a href="studentlogin">Login here</a></div>
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+
+
+{% endblock %}
