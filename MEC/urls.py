@@ -74,6 +74,9 @@ urlpatterns = [
 
 
     path('delete-notice/<str:pk>', views.delete_notice_view,name='delete-notice'),
+    path('resetpayment/', views.reset_payment, name='resetpayment'),
+    path('resetsinglepayment/<int:pk>', views.reset_single_payment, name='resetsinglepayment'),
+    path('resetted_students/', views.resetted_students_view, name='resetted_students'),
 
 
     path('aboutus', views.aboutus_view, name='aboutus'),

@@ -21,6 +21,7 @@
         <ul class="nav navbar-nav navbar-right">
           {% if user.is_authenticated %}        
           <li><a href="/logout"style="color: #131313"><span class="glyphicon glyphicon-log-in"></span><b> Logout</b></a></li>
+          <li><a href="{% url 'resetpayment' %}"style="color: #131313"><span class="glyphicon glyphicon-remove"></span><b> Reset Payment </b></a></li>
           {% else %}
           <li><a href="/clicked_signup" style="color: #131313"><span class="glyphicon glyphicon-user"></span><b> Sign Up</b></a></li>
           <li><a href="studentlogin"style="color: #131313"><span class="glyphicon glyphicon-log-in"></span><b> Login</b></a></li>

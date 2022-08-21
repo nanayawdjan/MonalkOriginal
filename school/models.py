@@ -1,6 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
+import datetime
+
 # Create your models here.
+
+    
 
 
 COMING_FROM = [
@@ -61,15 +66,20 @@ class StudentExtra(models.Model):
     residence = models.CharField(max_length=45, null=True, choices=COMING_FROM)
     fee=models.FloatField(null=True)
     status=models.BooleanField(default=False)
+    checkifpaid = models.BooleanField(default=False)
+    updatingtime = models.TimeField(auto_now=True)
     passport = models.ImageField(blank=True, null=True, upload_to="static/images/passports/")
+
+
     @property
     def get_name(self):
         return self.user.first_name+" "+self.user.last_name
     @property
     def get_id(self):
         return self.user.id
+
     def __str__(self):
-        return self.user.first_name
+        return self.user.first_name+' '+self.user.last_name 
 
 
 
@@ -79,6 +89,7 @@ class Payment(models.Model):
     when_made = models.DateField(blank=True, null=True)
     balance = models.FloatField(default=0, null=True, blank=True)
     depth = models.FloatField(default=0, null=True, blank=True)
+
 
 
 class Notice(models.Model):

@@ -1,4 +1,5 @@
 from multiprocessing import context
+from pyexpat import model
 from django.shortcuts import render,redirect,reverse
 from . import forms,models
 from django.db.models import Sum
@@ -8,6 +9,8 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 from django.conf import settings
 from django.core.mail import send_mail, BadHeaderError
 from django.contrib import messages
+from django.utils import timezone
+import datetime
 
 # from django.core.mail import send_mail
 from django.core.mail import EmailMessage
@@ -447,7 +450,7 @@ def student_dashboard_view(request):
 @login_required(login_url='studentlogin')
 @user_passes_test(is_admin)
 def make_payment(request):
-    students=models.StudentExtra.objects.all().filter(status=True)
+    students=models.StudentExtra.objects.all().filter(status=True, checkifpaid=False)
     context = {
         'students':students,
     }
@@ -464,7 +467,10 @@ def day_pay_view(request, pk):
     if request.method == 'POST':
         form2 = forms.PaymentForm(request.POST)
         if form2.is_valid():
-            form2.save()
+            student.checkifpaid = True
+            student.save()
+            form2.save() 
+            
         return redirect('make-payment')		
 
     context = {
@@ -487,7 +493,7 @@ def record_of_payment_view(request):
 def deletepay_view(request, pk):
     payment=models.Payment.objects.get(id=pk)
     payment.delete()
-    return redirect('record_of_payment')
+    return redirect('record_of_payment')  
 
 
 @login_required(login_url='adminlogin')
@@ -521,6 +527,7 @@ def individual_student_info_view(request, pk):
 def delete_individual_pay_view(request, pk):
     payment=models.Payment.objects.get(id=pk)
     payment.delete()
+    
     return redirect('admin-view-student')  
 
 def delete_notice_view(request, pk):
@@ -554,33 +561,29 @@ def sendEmail(request):
         email.send()
         messages.success(request, 'Reaching out to us was successful')
     return render(request, 'school/others/aboutus.html') 
+ 
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def reset_payment(request):
+    resetall = models.StudentExtra.objects.filter(checkifpaid = True)
+    resetall.update(checkifpaid = False)
+    return redirect('make-payment')
 
 
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def resetted_students_view(request):
+    students = models.StudentExtra.objects.filter(checkifpaid=True)
+    context = {
+        'students':students
+    }
+    return render(request, 'school/admin/resetted_students_view.html', context)
 
-# def sendEmail(request):
-
-# 	if request.method == 'POST':
-
-# 		template = render_to_string('school/others/email_template.html', {
-# 			'name':request.POST['name'],
-# 			'email':request.POST['email'],
-# 			'message':request.POST['message'],
-# 			})
-
-# 		email = EmailMessage(
-#         request.POST['subject'],
-# 	    template,
-# 	    settings.EMAIL_HOST_USER,
-# 	    ['nanayawdjan446@gmail.com']
-# 	    )
-
-
-#         email.fail_silently=False
-#         email.send()
-#         messages.success(request, 'Reaching out to us was successfull')
-        
-        
-
-# 	return render(request, 'school/others/email_sent.html')    
-
-  
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def reset_single_payment(request, pk):
+    reset_single = models.StudentExtra.objects.get(id=pk)
+    reset_single.checkifpaid = False
+    reset_single.save()
+    return redirect('make-payment')
