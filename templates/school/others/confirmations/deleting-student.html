@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+<form method="POST">
+    {% csrf_token %}
+    <h1>ARE YOU SURE TO DELETE {{student}} from the students</h1>
+    <button><a href="{% url 'admin-view-student' %}"> Cancel</a></button>
+    <input type="submit" value="Confirm">
+</form>

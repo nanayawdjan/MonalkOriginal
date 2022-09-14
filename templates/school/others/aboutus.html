@@ -1,6 +1,7 @@
+<!DOCTYPE html>
 {% extends 'school/others/homebase.html' %}
 {% block content %}
-<!DOCTYPE html>
+
 {% load static %}
   <style media="screen">
     body {
@@ -79,7 +80,7 @@
   {% include "school/others/navbar.html" %}
   <br><br>
   <center>
-    <h3 class='alert' style="margin-bottom:0px;">About Monalk Educational Complex</h3>
+    <h3 class="alert" style="margin-bottom:0px;">About Monalk Educational Complex</h3>
   </center>
   <div class="jumbotron" style="margin-bottom: 0px;margin-top: 0px;">
     <h1 class="display-4">MONALK EDUCATIONAL COMPLEX</h1>
@@ -96,7 +97,7 @@
   
   <div class="main-container">
     <a href=""></a>
-    <h3 style="text-align: center; color:white">Contact Monalk Educational Complex</Canvas></h3>
+    <h3 style="text-align: center; color:white">Contact Monalk Educational Complex</h3>
   
     <form id="contact-form" method="POST" action="{% url 'send_email' %}">
         {% csrf_token %}
@@ -115,12 +116,11 @@
         <textarea required class="input-field" name="message"></textarea>
   
         <input id="submit-btn" type="submit" value="Send">
-        {% for message in messages %}
-        <h3>{{message}}</h3>
-        {% endfor %}
     </form>
   </div>
+
 </body>
+
 
 
 {% endblock %}

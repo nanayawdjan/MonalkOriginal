@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 {% extends 'school/admin/adminbase.html' %}
 
 {% block content %}
@@ -44,18 +45,29 @@ table {
       <thead>
         <tr>
           <th class="tablestyle">Date</th>
-          <th class="tablestyle">Money</th>
+          <th class="tablestyle">Food Money</th>
+          <th class="tablestyle">Bus Money</th>
+          <th class="tablestyle">School Fees</th>
         </tr>
       </thead>
       <tbody>
-        {% for recod in dmr %}
+        {% for recod in dfmr %}
         <tr>
           <td class="tablestyle">{{recod.when_made}}</td>
           <td class="tablestyle">{{recod.sum}}</td>
+          <td class="tablestyle">{{recod.sum2}}</td>
+          {% if recod.sum3 == None %}
+          <td class="tablestyle">0</td>
+          {% else %}
+          <td class="tablestyle">{{recod.sum3}}</td>
+          {% endif %}
         </tr>
         {% endfor %}
+
+        
       </tbody>
     </table>
   </div>
 </section>
+
 {% endblock%}

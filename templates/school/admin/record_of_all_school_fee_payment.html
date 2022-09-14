@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+{% extends 'school/admin/adminbase.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    body{
+    background: #bba14f;
+  }
+  table, td, th {
+  border: 3px solid white;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: black;
+  text-align: center;
+  color: white;
+}
+
+td {
+  background-color: gray;
+  text-align: center;
+  font-weight: bold;
+  color: #fff;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.results tr[visible='false'],
+.no-result{
+  display: none;
+}
+
+.results tr[visible='true']{
+  display: table-row;
+}
+</style>
+<section class="hom"> 
+  <div class="text">
+    {% include 'school/admin/filter_list.html' %}
+    <table class="tablestyle results">
+      <thead>
+        <tr>
+          <th class="tablestyle">Names</th>
+
+          <th class="tablestyle">School Fees</th>
+          <th class="tablestyle">Date</th>
+          <th class="tablestyle">Delete</th>
+        </tr>
+      </thead>
+
+    <tbody>
+        {% for recor in record %}
+        <tr>
+          <td class="tablestyle">{{recor.student}}</td>
+          <td class="tablestyle">{{recor.schoolfees}}</td>
+          <td class="tablestyle">{{recor.when_made}}</td>
+          <td class="tablestyle"><a class="btn btn-danger btn-xs" href="{% url 'delete-school-fee-pay' recor.id %}"><span class="glyphicon glyphicon-trash"></span></a></td>
+        </tr>
+        {% endfor %}
+    </tbody>  
+  </table>
+  </div>
+</section>
+
+{% endblock content %}

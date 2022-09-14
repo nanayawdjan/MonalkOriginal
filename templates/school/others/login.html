@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+{% extends 'school/others/homebase.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+
+  <style type="text/css">
+    body {
+      color: #aa082e;
+      background-color: #BBA14F;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    a:link {
+      text-decoration: none;
+    }
+
+    .note {
+      text-align: center;
+      height: 80px;
+       background: black;
+      color: #fff;
+      font-weight: bold;
+      line-height: 80px;
+    }
+
+    .form-content {
+      padding: 5%;
+      border: 1px solid #ced4da;
+      margin-bottom: 2%;
+    }
+
+    .form-control {
+      border-radius: 1.5rem;
+    }
+
+    .btnSubmit {
+      border: none;
+      border-radius: 1.5rem;
+      padding: 1%;
+      width: 20%;
+      cursor: pointer;
+      background: black;
+      color: #fff;
+    }
+  @media(max-width: 767px){
+  .btnSubmit {
+    border: none;
+    border-radius: 1.5rem;
+    padding: 1%;
+    width: 30%;
+    cursor: pointer;
+    background: black;
+    color: #fff;
+  }
+  .text-center {
+    font-size: 15px;
+  }
+  .form{
+    margin-top: 50%;
+  }
+}   
+  </style>
+
+
+<body>
+  <br>
+  <br>
+  <br><br>
+
+  <form method="post">
+    {% csrf_token %}
+    <div class="container register-form">
+      <div class="form">
+        <div class="note">
+          <p>Login To Monalk Educational Complex</p>
+        </div>
+
+        <div class="form-content">
+          <div class="row">
+            <div class="col-md-6">
+
+              <div class="form-group">
+                <!-- {% render_field form.username class="form-control" placeholder="Username" %} -->
+                <input type="text" class="form-control" placeholder="text" name="username">
+              </div>
+
+            </div>
+            <div class="col-md-6">
+
+              <div class="form-group">
+                <!-- {% render_field form.password class="form-control" placeholder="Password" %} -->
+                <input type="password" class="form-control" placeholder="password" name="password">
+              </div>
+
+            </div>
+          </div>
+          <button type="submit" class="btnSubmit">Login</button>
+          <div class="text-center">Don't have an account? <a href="{% url 'clicked_signup' %}">SignUp here</a></div>
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+  <br><br><br>
+
+</body>
+
+{% endblock content %}

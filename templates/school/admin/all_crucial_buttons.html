@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+{% extends 'school/admin/adminbase.html' %}
+{%load static%}
+{% block content %}
+<button><a href="{% url 'resetpayment' %}" style="color: #131313"><span class="glyphicon glyphicon-remove"></span><b> Reset Payment </b></a></button>
+<button><a href="{% url 'reset-term-schoolfees' %}" style="color: #131313"><span class="glyphicon glyphicon-remove"></span><b> Reset School Fees </b></a></button>
+{% endblock %}

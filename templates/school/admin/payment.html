@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 {% extends 'school/admin/adminbase.html' %}
 {% load static %}
 {% load widget_tweaks %}
@@ -6,64 +7,97 @@
 
 
 
-<style>
-  body{
-  background: #bba14f;
-}
+<style media="screen">
+  a:link {
+    text-decoration: none;
+  }
 
-input{
-  padding: 7px;
-  margin: 7px;
-}
-a:hover{
-  color: #eec10b;
-  transition: all 0.3s ease;
-}
-#master:hover{
-  color: #eec10b;
-  transition: all 0.3s ease;
-}
-#id_student{
-  padding: 7px;
-  margin: 7px;
-  font-size: 18px;
-}
-.thing{
-  display: block;
-}
-#master{
-  margin-left: 30px;
-  padding-left: 20px;
-  padding-right: 20px;
-  cursor: pointer;
-  font-size: 15px;
-  background: #FDFC47;  
-  background: -webkit-linear-gradient(to right, #24FE41, #FDFC47);
-  background: linear-gradient(to right, #24FE41, #FDFC47);
-  border: none;
-  border-radius: 10px;
-  color: #fff;
-}
-form {
-  padding-left: 20px;
-}
+  .note {
+    text-align: center;
+    height: 80px;
+     background: #000;
+    color: #fff;
+    font-weight: bold;
+    line-height: 80px;
+  }
+
+  .form-content {
+    padding: 5%;
+    border: 1px solid #ced4da;
+    margin-bottom: 2%;
+  }
+
+  .form-control {
+    border-radius: 1.5rem;
+  }
+
+  .btnSubmit {
+    border: none;
+    border-radius: 1.5rem;
+    padding: 1%;
+    width: 20%;
+    cursor: pointer;
+    background: #000;
+    color: #fff;
+  }
+  .student_name {
+    text-align: center;
+    color: white;
+    font-weight: bold;
+  }
 </style>
 
-<form method="POST">
+
+<form method="post">
   {% csrf_token %}
-    <p>NAME: {{form2.student}}</p>
-    <p>AM: {{form2.pay}}</p>
-    <p>DA: {{form2.when_made}}</p>
-    <p>ML: {{form2.balance}}</p>
-    <p>AR: {{form2.depth}}</p>
-  {% for i in student_pay %}
+  <div class="container register-form">
+    <div class="form">
+      <div class="note">
+        <p>Make Payment</p>
+        
+      </div>
+
+      <div class="form-content">
+        <h1 class="student_name">{{student}}</h1>
+        <div class="form-group" style="display: none;">
+          <p><b>Name</b></p>   
+          {% render_field form2.student class="form-control" placeholder="Food Payment" %}
+        </div>
+            <div class="form-group">
+              <p><b>Food Payment</b></p>
+              {% render_field form2.pay class="form-control" placeholder="Food Payment" %}
+            </div>
+            <div class="form-group">
+              <p><b>Car Payment</b></p>
+              {% render_field form2.carpay class="form-control" placeholder="Car Payment" %}
+            </div>
+            <div class="form-group">
+              <p><b>School Fees Payment</b></p>
+              {% render_field form2.schoolfees class="form-control" placeholder="Daily School Fees" %}
+            </div>
+            <div class="form-group">
+              <p><b>Date</b></p>
+              {% render_field form2.when_made class="form-control" placeholder="Date" %}
+            </div>
+            <div class="form-group">
+              <p><b>Balance</b></p>
+              {% render_field form2.balance class="form-control" placeholder="Balance" %}
+            </div>
+            <div class="form-group">
+              <p><b>Debth</b></p>
+              {% render_field form2.depth class="form-control" placeholder="Debth" %}
+            </div>
+            {% for i in student_pay %}
     {% if forloop.last %}
     <h3>ML: {{i.balance}}</h3>
     <h3>AR: {{i.depth}}</h3>
     {% endif %}
   {% endfor %}
-  <a><input type="submit" name="submit" value="Save" id="master"></a>
-</form>
+  <button type="submit" class="btnSubmit">Pay</button>
+      </div>
+    </div>
+  </div>
 
+</form>
 
 {% endblock content %}

@@ -1,5 +1,17 @@
-CREATE ERROR MESSAGE IF WASNT ABLE TO ADD STUDENT
-ADD TROLL AND SOAP AND IF PAID AND INDICATION SHOULD BE SHOWN
 WORK WITH THE DAILY PAYMENT ISSUE
-CONFIRM BEFORE DELETE
 HOST THE UPDATE TO LIVE
+
+REMEMBER TO UNCOMMENT THE COMMENTED ONE school fee payment 210
+
+add field to add all payment
+
+exception on some students
+
+get the payment id corresponding to the user u are resetting the payment
+
+REMEMBER TO BACKUP THE MYSQL DATA SOMEWHERE
+
+MAKING A PROPER AUTHETICATION
+
+Calculate the total schoolfees from that side
+Create a page for those with debth

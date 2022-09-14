@@ -1,6 +1,7 @@
+<!DOCTYPE html>
 {% load static %}
 
-<!DOCTYPE html>
+
 <html lang="en" dir="ltr">
 
 <head>
@@ -12,7 +13,8 @@
 <!-- CSS -->
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+  <!-- <link rel="stylesheet" href="{% static 'offlineboot/css/bootstrap.css' %}"> -->
+  <link rel="stylesheet prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link rel="icon" href="{% static '/images/mecky.png' %}">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
@@ -31,14 +33,15 @@
   <!-- Javascript -->   
   <script type="text/javascript" src="{% static 'js/script.js' %}"></script> 
   <script type="text/javascript" src="{% static 'js/slide.js' %}"></script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- <script src="{% static 'offlineboot/js/bootstrap.js' %}"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
   <script>
     {% for message in messages %}
       alertify.set('notifier','position', 'top-center');
       alertify.success('{{message}}');
-    {% endfor %}  
+    {% endfor %}
   </script>
 </body> 
 </html>

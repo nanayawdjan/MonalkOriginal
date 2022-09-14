@@ -1,13 +1,8 @@
+<!DOCTYPE html>
 {% extends "school/others/homebase.html" %}
 {% block content %}
 
 {% load widget_tweaks %}
-<html lang="en" dir="ltr">
-
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Monalk Educational Complex</title>
   <style type="text/css">
     body {
       color: #aa082e;
@@ -140,7 +135,7 @@
             </div>
           </div>
            <button type="submit" class="btnSubmit">Take Admission</button>
-          <div class="text-center">Already have an account? <a href="studentlogin">Login here</a></div>
+          <div class="text-center">Already have an account? <a href="{% url 'login' %}">Login here</a></div>
         </div>
       </div>
     </div>

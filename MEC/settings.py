@@ -12,10 +12,12 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
+from django.contrib.messages import constants as messages
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TEMPLATE_DIR = os.path.join(BASE_DIR,'templates')
-STATIC_DIR=os.path.join(BASE_DIR,'static')
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
 
 # Quick-start development settings - unsuitable for production
@@ -27,7 +29,7 @@ with open(os.path.join(BASE_DIR, 'secret_key.txt')) as f:
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-if DEBUG == True:  
+if DEBUG == True:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -35,7 +37,8 @@ if DEBUG == True:
         }
     }
 else:
-    ALLOWED_HOSTS = ['monalk.site', 'www.monalk.site', 'monalk.online', 'www.monalk.online']
+    ALLOWED_HOSTS = ['monalk.site', 'www.monalk.site',
+                     'monalk.online', 'www.monalk.online']
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
@@ -45,16 +48,15 @@ else:
             'USER': 'monalksi2_admin',
             'PASSWORD': 'Sl7TM7jgw7Q6nzlfPQaOkH6d3A'
 
-    }
+        }
     }
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_SSL_REDIRECT = True
 
-
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_PRELOAD = True
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True    
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 
 # Application definition
@@ -82,12 +84,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 ROOT_URLCONF = 'MEC.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_DIR,],
+        'DIRS': [TEMPLATE_DIR, ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -100,6 +103,15 @@ TEMPLATES = [
     },
 ]
 
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-secondary',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}
+
 WSGI_APPLICATION = 'MEC.wsgi.application'
 
 
@@ -107,8 +119,7 @@ WSGI_APPLICATION = 'MEC.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 
-
-#Password validation
+# Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -146,14 +157,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS=[
-STATIC_DIR,
- ]
+STATICFILES_DIRS = [
+    STATIC_DIR,
+]
 
 
-LOGIN_REDIRECT_URL='/afterlogin'
+LOGIN_REDIRECT_URL = '/afterlogin'
 
-#for contact us give your gmail id and password
+# for contact us give your gmail id and password
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
