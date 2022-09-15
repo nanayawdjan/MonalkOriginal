@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from unicodedata import name
 from django.contrib import admin
 from django.urls import path
 from school import views
@@ -107,8 +108,11 @@ urlpatterns = [
          views.reset_students_view, name='reset_students'),
     path('all_crucial_buttons/', views.all_crucial_buttons_view,
          name='all_crucial_buttons'),
+    path('student-with-debth', views.those_having_our_money,
+         name='student-with-debth'),
 
-
+    # ====================================== SCHOOL FEES PAYMENT ===================================
+    # ====================================== SCHOOL FEES PAYMENT ===================================
     # ====================================== SCHOOL FEES PAYMENT ===================================
     path('school-fees-payment/', views.makeSchoolFeesPaymentView,
          name='school-fees-payment'),
@@ -120,6 +124,8 @@ urlpatterns = [
     path('reset-term-schoolfees', views.reset_term_schoolfees,
          name='reset-term-schoolfees'),
 
+    # ================================== END OF SCHOOL FEES PAYMENT ================================
+    # ================================== END OF SCHOOL FEES PAYMENT ================================
     # ================================== END OF SCHOOL FEES PAYMENT ================================
 
     path('aboutus', views.aboutus_view, name='aboutus'),

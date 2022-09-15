@@ -511,6 +511,13 @@ def sendEmail(request):
     return render(request, 'school/others/aboutus.html')
 
 
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def all_crucial_buttons_view(request):
+    context = {}
+    return render(request, 'school/admin/all_crucial_buttons.html', context)
+
+
 # ================================= DAILY FEES PAYMENT ================================ #
 # ================================= DAILY FEES PAYMENT ================================ #
 # ================================= DAILY FEES PAYMENT ================================ #
@@ -621,12 +628,6 @@ def reset_single_payment(request, pk):
 # ================X================= END OF DAILY FEES PAYMENT ===============X================= #
 
 
-@login_required(login_url='adminlogin')
-@user_passes_test(is_admin)
-def all_crucial_buttons_view(request):
-    context = {}
-    return render(request, 'school/admin/all_crucial_buttons.html', context)
-
 # ================================= SCHOOL FEES PAYMENT ================================ #
 # ================================= SCHOOL FEES PAYMENT ================================ #
 # ================================= SCHOOL FEES PAYMENT ================================ #
@@ -690,3 +691,20 @@ def reset_term_schoolfees(request):
 # ================================= END SCHOOL FEES PAYMENT ================================ #
 # ================================= END SCHOOL FEES PAYMENT ================================ #
 # ================================= END SCHOOL FEES PAYMENT ================================ #
+
+
+# ================================= THOSE HAVING OUR MONEY ================================ #
+# ================================= THOSE HAVING OUR MONEY ================================ #
+# ================================= THOSE HAVING OUR MONEY ================================ #
+@login_required(login_url='login')
+@user_passes_test(is_admin)
+def those_having_our_money(request):
+    records = models.Payment.objects.all()
+
+    context = {'records': records}
+    return render(request, 'school/admin/those_owing.html', context)
+
+
+# ================================= END OF THOSE HAVING OUR MONEY ================================ #
+# ================================= END OF THOSE HAVING OUR MONEY ================================ #
+# ================================= END OF THOSE HAVING OUR MONEY ================================ #
