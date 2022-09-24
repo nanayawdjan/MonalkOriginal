@@ -221,7 +221,7 @@ def admin_approve_teacher_view(request):
     return render(request, 'school/admin/admin_approve_teacher.html', {'teachers': teachers})
 
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def approve_teacher_view(request, pk):
     teacher = models.TeacherExtra.objects.get(id=pk)
@@ -230,7 +230,7 @@ def approve_teacher_view(request, pk):
     return redirect(reverse('admin-approve-teacher'))
 
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def delete_teacher_view(request, pk):
     teacher = models.TeacherExtra.objects.get(id=pk)
@@ -240,7 +240,7 @@ def delete_teacher_view(request, pk):
     return redirect('admin-approve-teacher')
 
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def delete_teacher_from_school_view(request, pk):
     teacher = models.TeacherExtra.objects.get(id=pk)
@@ -250,7 +250,7 @@ def delete_teacher_from_school_view(request, pk):
     return redirect('admin-view-teacher')
 
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def update_teacher_view(request, pk):
     teacher = models.TeacherExtra.objects.get(id=pk)
@@ -275,7 +275,7 @@ def update_teacher_view(request, pk):
     return render(request, 'school/admin/admin_update_teacher.html', context=mydict)
 
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def admin_view_teacher_salary_view(request):
     teachers = models.TeacherExtra.objects.all()
@@ -284,13 +284,13 @@ def admin_view_teacher_salary_view(request):
 
 # for student by adminnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def admin_student_view(request):
     return render(request, 'school/admin/admin_student.html')
 
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def admin_add_student_view(request):
     form1 = forms.StudentUserForm()
@@ -321,14 +321,14 @@ def admin_add_student_view(request):
     return render(request, 'school/admin/admin_add_student.html', context=mydict)
 
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def admin_view_student_view(request):
     students = models.StudentExtra.objects.all().filter(status=True)
     return render(request, 'school/admin/admin_view_student.html', {'students': students})
 
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def delete_student_from_school_view(request, pk):
     student = models.StudentExtra.objects.get(id=pk)
@@ -340,7 +340,7 @@ def delete_student_from_school_view(request, pk):
     return render(request, 'school/others/confirmations/deleting-student.html')
 
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def delete_student_view(request, pk):
     student = models.StudentExtra.objects.get(id=pk)
@@ -350,7 +350,7 @@ def delete_student_view(request, pk):
     return redirect('admin-approve-student')
 
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def update_student_view(request, pk):
     student = models.StudentExtra.objects.get(id=pk)
@@ -373,14 +373,14 @@ def update_student_view(request, pk):
     return render(request, 'school/admin/admin_update_student.html', context=mydict)
 
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def admin_approve_student_view(request):
     students = models.StudentExtra.objects.all().filter(status=False)
     return render(request, 'school/admin/admin_approve_student.html', {'students': students})
 
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def approve_student_view(request, pk):
     students = models.StudentExtra.objects.get(id=pk)
@@ -390,7 +390,7 @@ def approve_student_view(request, pk):
 
 
 # notice related viewsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def admin_notice_view(request):
     form = forms.NoticeForm()
@@ -405,8 +405,8 @@ def admin_notice_view(request):
 
 
 # for TEACHER  LOGIN    SECTIONNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-@login_required(login_url='studentlogin')
-@user_passes_test(is_teacher)
+@login_required(login_url='login')
+@user_passes_test(is_admin)
 def teacher_dashboard_view(request):
     teacherdata = models.TeacherExtra.objects.all().filter(
         status=True, user_id=request.user.id)
@@ -420,8 +420,8 @@ def teacher_dashboard_view(request):
     return render(request, 'school/teacher/teacher_dashboard.html', context=mydict)
 
 
-@login_required(login_url='teacherlogin')
-@user_passes_test(is_teacher)
+@login_required(login_url='login')
+@user_passes_test(is_admin)
 def teacher_notice_view(request):
     form = forms.NoticeForm()
     if request.method == 'POST':
@@ -437,8 +437,8 @@ def teacher_notice_view(request):
 
 
 # FOR STUDENT AFTER THEIR Loginnnnnnnnnnnnnnnnnnnnn
-@login_required(login_url='studentlogin')
-@user_passes_test(is_student)
+@login_required(login_url='login')
+@user_passes_test(is_admin)
 def student_dashboard_view(request):
     studentdata = models.StudentExtra.objects.all().filter(
         status=True, user_id=request.user.id)
@@ -461,7 +461,7 @@ def student_dashboard_view(request):
 # for payment=========================================================================================
 
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def individual_student_info_view(request, pk):
     student = models.StudentExtra.objects.get(id=pk)
@@ -514,7 +514,7 @@ def sendEmail(request):
     return render(request, 'school/others/aboutus.html')
 
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def all_crucial_buttons_view(request):
     context = {}
@@ -525,7 +525,7 @@ def all_crucial_buttons_view(request):
 # ================================= DAILY FEES PAYMENT ================================ #
 # ================================= DAILY FEES PAYMENT ================================ #
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def make_payment(request):
     students = models.StudentExtra.objects.all().filter(
@@ -536,7 +536,7 @@ def make_payment(request):
     return render(request, 'school/admin/make_payment.html', context)
 
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def day_pay_view(request, pk):
     student = models.StudentExtra.objects.get(id=pk)
@@ -563,7 +563,7 @@ def day_pay_view(request, pk):
     return render(request, 'school/admin/payment.html', context)
 
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def record_of_payment_view(request):
     record = models.Payment.objects.all()
@@ -571,7 +571,7 @@ def record_of_payment_view(request):
     return render(request, 'school/admin/record_of_payment.html', context)
 
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def deletepay_view(request, pk):
     payment = models.Payment.objects.get(id=pk)
@@ -579,7 +579,7 @@ def deletepay_view(request, pk):
     return redirect('record_of_payment')
 
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def history_of_day_payment_view(request):
     dfmr = models.Payment.objects.filter().values('when_made').order_by(
@@ -592,7 +592,7 @@ def history_of_day_payment_view(request):
     return render(request, 'school/admin/history_of_day_pay.html', context)
 
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def delete_individual_pay_view(request, pk):
     payment = models.Payment.objects.get(id=pk)
@@ -601,7 +601,7 @@ def delete_individual_pay_view(request, pk):
     return redirect('admin-view-student')
 
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def reset_daily_payment_button(request):
     resetall = models.StudentExtra.objects.filter(checkifpaiddaily=True)
@@ -611,7 +611,7 @@ def reset_daily_payment_button(request):
     return render(request, 'school/others/confirmations/reset-daily-payment-fees.html')
 
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def reset_students_view(request):
     students = models.StudentExtra.objects.filter(checkifpaiddaily=True)
@@ -621,7 +621,7 @@ def reset_students_view(request):
     return render(request, 'school/admin/resetted_students_view.html', context)
 
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def reset_single_payment(request, pk):
     reset_single = models.StudentExtra.objects.get(id=pk)
@@ -640,7 +640,7 @@ def reset_single_payment(request, pk):
 # ================================= SCHOOL FEES PAYMENT ================================ #
 
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def makeSchoolFeesPaymentView(request):
     students = models.StudentExtra.objects.all().filter(
@@ -649,7 +649,7 @@ def makeSchoolFeesPaymentView(request):
     return render(request, 'school/admin/make_schoolfees_payment.html', context)
 
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def termPayView(request, pk):
     student = models.StudentExtra.objects.get(id=pk)
@@ -673,7 +673,7 @@ def termPayView(request, pk):
     return render(request, 'school/admin/term_pay.html', context)
 
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def recordOfAllSchoolFeePayment(request):
     record = models.SchoolFeePayment.objects.all()
@@ -681,7 +681,7 @@ def recordOfAllSchoolFeePayment(request):
     return render(request, 'school/admin/record_of_all_school_fee_payment.html', context)
 
 
-@login_required(login_url='adminlogin')
+@login_required(login_url='login')
 @user_passes_test(is_admin)
 def deleteSchoolFeePayView(request, pk):
     payment = models.SchoolFeePayment.objects.get(id=pk)
