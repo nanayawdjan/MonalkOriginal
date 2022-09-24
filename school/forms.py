@@ -65,8 +65,6 @@ class ContactusForm(forms.Form):
 
 class PaymentForm(forms.ModelForm):
     when_made = forms.DateField(initial=datetime.date.today)
-    pay = forms.FloatField(initial=2)
-    carpay = forms.FloatField(initial=4)
 
     class Meta:
         model = models.Payment

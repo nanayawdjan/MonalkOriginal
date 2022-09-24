@@ -34,12 +34,13 @@ table {
 .results tr[visible='true']{
   display: table-row;
 }
+
 </style>
 <section class="hom"> 
     <div class="text">
     {% include 'school/admin/filter_list.html' %}
     <table class="tablestyle results">
-      <thead>
+      <thead class="tableheader">
         <tr>
           <th class="tablestyle">Names</th>
           <th class="tablestyle">Food Money</th>

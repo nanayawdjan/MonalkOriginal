@@ -8,6 +8,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .decorators import unauthenticated_user
+from django.db.models import OuterRef, Subquery
 
 
 # from django.core.mail import send_mail
@@ -165,7 +166,7 @@ def admin_dashboard_view(request):
         'studentfee': studentfee['fee__sum'],
         'pendingstudentfee': pendingstudentfee['fee__sum'],
 
-        'notice': notice
+        'notice': notice,
 
     }
 
@@ -465,14 +466,16 @@ def student_dashboard_view(request):
 def individual_student_info_view(request, pk):
     student = models.StudentExtra.objects.get(id=pk)
     pay_record = student.payment_set.all()
-    dmr = pay_record.aggregate(thepaid=Sum('pay'))
+    dcr = pay_record.aggregate(thepaid=Sum('pay'))
+    dbr = pay_record.aggregate(dbrpay=Sum('carpay'))
+    dtr = pay_record.aggregate(dtrpay=Sum('schoolfees'))
     bala = models.Payment.objects.all()
-    # schoolfeespayment = models.SchoolFeePayment.objects.all()
-    print(bala)
     context = {
         'student': student,
         'pay_record': pay_record,
-        'dmr': dmr,
+        'dcr': dcr,
+        'dbr': dbr,
+        'dtr': dtr,
         'bala': bala
     }
     return render(request, 'school/others/individual_student_info.html', context)
@@ -542,6 +545,10 @@ def day_pay_view(request, pk):
     if request.method == 'POST':
         form2 = forms.PaymentForm(request.POST)
         if form2.is_valid():
+            debt = form2.cleaned_data['depth']
+            balance = form2.cleaned_data['balance']
+            student.balance = balance
+            student.debt = debt
             student.checkifpaiddaily = True
             student.save()
             form2.save()
@@ -577,10 +584,10 @@ def deletepay_view(request, pk):
 def history_of_day_payment_view(request):
     dfmr = models.Payment.objects.filter().values('when_made').order_by(
         'when_made').annotate(sum=Sum('pay'), sum2=Sum('carpay'), sum3=Sum('schoolfees'))
-    dcmr = models.SchoolFeePayment.objects.filter().values(
-        'when_made').order_by('when_made').annotate(sum=Sum('schoolfees'))
+    dsmr = models.SchoolFeePayment.objects.filter().values(
+        'when_made').order_by('when_made').annotate(sum4=Sum('schoolfees'))
     context = {'dfmr': dfmr,
-               'dcmr': dcmr,
+               'dsmr': dsmr,
                }
     return render(request, 'school/admin/history_of_day_pay.html', context)
 
@@ -648,6 +655,7 @@ def termPayView(request, pk):
     student = models.StudentExtra.objects.get(id=pk)
     form = forms.SchoolFeePaymentForm(initial={'student': student})
     student_pay = student.schoolfeepayment_set.all()
+    addedup = student_pay.aggregate(thesum=Sum('schoolfees'))
     if request.method == 'POST':
         form = forms.SchoolFeePaymentForm(request.POST)
         if form.is_valid():
@@ -660,6 +668,7 @@ def termPayView(request, pk):
         'student': student,
         'form': form,
         'student_pay': student_pay,
+        'addedup': addedup,
     }
     return render(request, 'school/admin/term_pay.html', context)
 
@@ -680,6 +689,8 @@ def deleteSchoolFeePayView(request, pk):
     return redirect('record-of-all-school-fee-payment')
 
 
+@login_required(login_url='login')
+@user_passes_test(is_admin)
 def reset_term_schoolfees(request):
     resetall = models.StudentExtra.objects.filter(checkifpaidterm=True)
     if request.method == 'POST':
@@ -699,7 +710,8 @@ def reset_term_schoolfees(request):
 @login_required(login_url='login')
 @user_passes_test(is_admin)
 def those_having_our_money(request):
-    records = models.Payment.objects.all()
+    records = models.StudentExtra.objects.exclude(debt=0)
+    print(records)
 
     context = {'records': records}
     return render(request, 'school/admin/those_owing.html', context)

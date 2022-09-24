@@ -68,6 +68,11 @@ body{
     margin:0;
 }
 
+.tableheader{
+    position: sticky;
+    top: 98px;
+}
+
 @media(max-width: 767px){
     #myNavbar{
     background: -webkit-linear-gradient(

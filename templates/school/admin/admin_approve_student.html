@@ -1,7 +1,7 @@
+<!DOCTYPE html>
 {% extends 'school/admin/adminbase.html' %}
 {% load static %}
 {% block content %}
-<head>
 
   <!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
@@ -92,7 +92,7 @@ color: #ffffff;
 
   {% include 'school/admin/filter_list.html' %}
     <table class="table table-bordered border-primary results">
-    <thead>
+    <thead class="tableheader">
     <tr>
       <th>Name</th>
       <th>Class</th>
@@ -113,6 +113,7 @@ color: #ffffff;
     </tr>
     {% endfor %}
     </tbody>
+    </table>
   </div>
 </section>
 

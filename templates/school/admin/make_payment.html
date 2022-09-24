@@ -79,30 +79,36 @@
     .results tr[visible='true']{
       display:table-row;
     }
+    .stay{
+      position: sticky;
+      top: 110px;
+    }
 </style>
 
 <section class="hom"> 
-<div class="text">
+  <div class="text">
 
-  {% include 'school/admin/filter_list.html' %}
+    {% include 'school/admin/filter_list.html' %}
     <table class="table table-bordered border-primary results">
-      <thead>
-    <tr>
-      <th>Name</th>
-      <th>Residence</th>
-      <th>Class</th>
-      <th>Pay</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for s in students %}
-      <td class="tablestyle"><strong>{{s.get_name}}</strong></td>
-      <td class="tablestyle"><strong>{{s.residence}}</strong></td>
-      <td class="tablestyle"><strong>{{s.cl}}</strong></td>
-      <td class="tablestyle"><a href="{% url 'admin-payment' s.id%}" class="pay">Payment</a></td>
-    </tr>
-    {% endfor %}
-    </tbody>
+      <thead class="stay">
+        <tr>
+          <th>Name</th>
+          <th>Residence</th>
+          <th>Class</th>
+          <th>Pay</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in students %}
+        <tr>
+          <td class="tablestyle"><strong>{{s.get_name}}</strong></td>
+          <td class="tablestyle"><strong>{{s.residence}}</strong></td>
+          <td class="tablestyle"><strong>{{s.cl}}</strong></td>
+          <td class="tablestyle"><a href="{% url 'admin-payment' s.id%}" class="pay">Payment</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 </section>
 

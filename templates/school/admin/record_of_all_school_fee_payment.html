@@ -40,11 +40,14 @@ table {
   <div class="text">
     {% include 'school/admin/filter_list.html' %}
     <table class="tablestyle results">
-      <thead>
+      <thead class="tableheader">
         <tr>
           <th class="tablestyle">Names</th>
 
           <th class="tablestyle">School Fees</th>
+          <th class="tablestyle">Broom</th>
+          <th class="tablestyle">Troll</th>
+          <th class="tablestyle">Soap</th>
           <th class="tablestyle">Date</th>
           <th class="tablestyle">Delete</th>
         </tr>
@@ -55,6 +58,9 @@ table {
         <tr>
           <td class="tablestyle">{{recor.student}}</td>
           <td class="tablestyle">{{recor.schoolfees}}</td>
+          <td class="tablestyle">{{recor.broom}}</td>
+          <td class="tablestyle">{{recor.troll}}</td>
+          <td class="tablestyle">{{recor.soap}}</td>
           <td class="tablestyle">{{recor.when_made}}</td>
           <td class="tablestyle"><a class="btn btn-danger btn-xs" href="{% url 'delete-school-fee-pay' recor.id %}"><span class="glyphicon glyphicon-trash"></span></a></td>
         </tr>

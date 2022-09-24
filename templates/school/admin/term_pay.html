@@ -41,6 +41,7 @@
     color: white;
     font-weight: bold;
   }
+
 </style>
 
 
@@ -69,19 +70,19 @@
           </div>
           <div class="form-group">
             <p><b>Debth</b></p>
-            {% render_field form.debth class="form-control" placeholder="Remaining Debth" %}
+            {% render_field form.debth id="debt" class="form-control" placeholder="Remaining Debth" %}
           </div>
           <div class="form-group">
             <p><b>Troll</b></p>
-            {% render_field form.troll class="form-control" %}
+            {% render_field form.troll id="troll" class="form-control" %}
           </div>
           <div class="form-group">
             <p><b>Soap</b></p>
-            {% render_field form.soap class="form-control" %}
+            {% render_field form.soap id="soap" class="form-control" %}
           </div>
           <div class="form-group">
             <p><b>Broom</b></p>
-            {% render_field form.broom class="form-control" %}
+            {% render_field form.broom id="broom" class="form-control" %}
           </div>
           <button type="submit" class="btnSubmit">Pay</button>
           {% for i in student_pay %}
@@ -95,8 +96,30 @@
   </div>
 
 </form>
+
+<script>
+  {% for chec in student_pay %}
+  {% if chec.troll == True %}
+    document.getElementById('troll').checked = true;
+  {% endif %}
+  {% if chec.soap == True %}
+    document.getElementById('soap').checked = true;
+  {% endif %}
+  {% if chec.broom == True %}
+    document.getElementById('broom').checked = true;
+  {% endif %}
+  {% endfor %}
+
+  var paid = '{{addedup.thesum}}'
+  
+  if (parseInt(paid) < 210){
+    var remain = 210-paid
+    document.getElementById('debt').defaultValue = remain
+  }
+  if (paid == 'None'){
+    document.getElementById('debt').defaultValue = 210
+  }
+ 
+
+</script>
 {% endblock content %}
-<!-- <p>NAME: {{form.student}}</p>
-      <p>FP: {{form.schoolfees}}</p>
-      <p>DA: {{form.when_made}}</p>
-      <p>AR: {{form.debth}}</p> -->

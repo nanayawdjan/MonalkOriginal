@@ -1,8 +1,9 @@
+<!DOCTYPE html>
 {% extends 'school/admin/adminbase.html' %}
 
 {% block content %}
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<style type="text/css">
+<style>
 a:link {
   text-decoration: none;
 }
@@ -107,13 +108,27 @@ table, td {
 		color: #ffffff;
 	}
 	.areas{
-		color: #ee0b1b;
+		color: 	#ffffff;
 	}
 	.good{
 		color: #41532a;
 	}
+	.last-record-of-money{
+		display: flex;
+		justify-content: space-around;
+		margin: 15px;	
+	}
+	h3 {
+		font-weight: bold;
+	}
+	@media(max-width: 615px) {
+		.last-record-of-money{
+			display: grid;
+			text-align: center;	
+		}
+	}
 </style>
-</head>
+
 
 <body>
 	<h1 class="hedy">This is {{student.get_name}}</h1>
@@ -231,27 +246,30 @@ table, td {
   </div>
 </div>
 </div>
+<div class="last-record-of-money">
+	<!-- None and dbr.dbrpay == None and dtr.dtrpay == None -->
+	{% if dcr.thepaid == None%}
+	<h3 class="good">TOTAL PAID: 0.0</h3>
+	{% else %}
+		<h3 class="good" id="calculated"></h3>
+	{% endif %}
 
-{% if dmr.thepaid == None %}
-<h3 class="good">TOTAL PAID: 0.0</h3>
-{% else %}
-	<h3 class="good">TOTAL PAID: {{dmr.thepaid}}</h3>
-{% endif %}
+	{% for rec in pay_record %}
+	{% if forloop.last %}
 
-
-{% for rec in pay_record %}
-{% if forloop.last %}
-<h3 class="good">BALANCE: {{rec.balance}}</h3>
-<h3 class="areas">ARREAS: {{rec.depth}}</h3>
-{% endif %}
-{% endfor %}
-</span>
+	<h3 class="good">BALANCE: {{rec.balance}}</h3>
+	<h3 class="areas">ARREAS: {{rec.depth}}</h3>
+	{% endif %}
+	{% endfor %}
+</div>
 
 
 <table class="table table-bordered border-primary">
 <tr>
 	<th>Day</th>
-	<th>Paid</th>
+	<th>Canteen</th>
+	<th>Tution</th>
+	<th>Bus</th>
 	<th>Delete</th>
 </tr>
 <tbody>
@@ -259,9 +277,18 @@ table, td {
 <tr>
 	<td class="tablestyle"><strong>{{recor.when_made}}</strong></td>
 	<td class="tablestyle"><strong>{{recor.pay}}</strong></td>
+	<td class="tablestyle"><strong>{{recor.schoolfees}}</strong></td>
+	<td class="tablestyle"><strong>{{recor.carpay}}</strong></td>
 	<td class="tablestyle"><a href="{% url 'delete-individual-pay' recor.id %}" class="deleteite" >DELETE</a></td>
 </tr>
 {% endfor %}
 
 <script src="http://netdna.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+<script>
+	var canteen = {{dcr.thepaid}}
+	var bus = {{dbr.dbrpay}}
+	var tution = {{dtr.dtrpay}}
+	var added = canteen + bus + tution
+	document.getElementById('calculated').innerHTML= 'TOTAL PAID: '+ added
+</script>
 {% endblock%}

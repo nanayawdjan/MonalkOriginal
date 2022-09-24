@@ -65,15 +65,15 @@
         </div>
             <div class="form-group">
               <p><b>Food Payment</b></p>
-              {% render_field form2.pay class="form-control" placeholder="Food Payment" %}
+              {% render_field form2.pay class="form-control" id="food" placeholder="Food Payment" %}
             </div>
             <div class="form-group">
               <p><b>Car Payment</b></p>
-              {% render_field form2.carpay class="form-control" placeholder="Car Payment" %}
+              {% render_field form2.carpay class="form-control" id="car" placeholder="Car Payment" %}
             </div>
             <div class="form-group">
               <p><b>School Fees Payment</b></p>
-              {% render_field form2.schoolfees class="form-control" placeholder="Daily School Fees" %}
+              {% render_field form2.schoolfees class="form-control" id="fees" placeholder="Daily School Fees" %}
             </div>
             <div class="form-group">
               <p><b>Date</b></p>
@@ -81,11 +81,11 @@
             </div>
             <div class="form-group">
               <p><b>Balance</b></p>
-              {% render_field form2.balance class="form-control" placeholder="Balance" %}
+              {% render_field form2.balance class="form-control" id="balance" placeholder="Balance" %}
             </div>
             <div class="form-group">
               <p><b>Debth</b></p>
-              {% render_field form2.depth class="form-control" placeholder="Debth" %}
+              {% render_field form2.depth class="form-control" id="debt" placeholder="Debth" %}
             </div>
             {% for i in student_pay %}
     {% if forloop.last %}
@@ -99,5 +99,64 @@
   </div>
 
 </form>
+
+<script>
+  switch('{{ student.residence }}'){
+    case 'Adamsu':
+      document.getElementById("food").defaultValue = 2;
+      document.getElementById("car").defaultValue = 2;
+      document.getElementById("fees").defaultValue = 3;
+      break;
+
+    case 'Mpuasu':
+      document.getElementById("food").defaultValue = 2;
+      document.getElementById("car").defaultValue = 3;
+      document.getElementById("fees").defaultValue = 3;
+      break; 
+
+    case 'Dwenem':
+      document.getElementById("food").defaultValue = 2;
+      document.getElementById("car").defaultValue = 3;
+      document.getElementById("fees").defaultValue = 3;
+      break;
+
+    case 'Bodaa':
+      document.getElementById("food").defaultValue = 2;
+      document.getElementById("car").defaultValue = 3;
+      document.getElementById("fees").defaultValue = 3;
+      break;
+
+    case 'Kofitia':
+      document.getElementById("food").defaultValue = 2;
+      document.getElementById("car").defaultValue = 4;
+      document.getElementById("fees").defaultValue = 3;
+      break;
+
+    case 'Adiokor1':
+      document.getElementById("food").defaultValue = 2;
+      document.getElementById("car").defaultValue = 4;
+      document.getElementById("fees").defaultValue = 3;
+      break;
+
+    case 'Adiokor2':
+      document.getElementById("food").defaultValue = 2;
+      document.getElementById("car").defaultValue = 4;
+      document.getElementById("fees").defaultValue = 3;
+      break;
+
+    case 'Zezera':
+      document.getElementById("food").defaultValue = 2;
+      document.getElementById("car").defaultValue = 4;
+      document.getElementById("fees").defaultValue = 3;
+      break;
+
+    case 'Kwamepim':
+      document.getElementById("food").defaultValue = 2;
+      document.getElementById("car").defaultValue = 4;
+      document.getElementById("fees").defaultValue = 3;
+      break;  
+  }
+  
+</script>
 
 {% endblock content %}

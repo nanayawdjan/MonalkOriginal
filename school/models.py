@@ -71,6 +71,8 @@ class StudentExtra(models.Model):
     status = models.BooleanField(default=False)
     checkifpaiddaily = models.BooleanField(default=False)
     checkifpaidterm = models.BooleanField(default=False)
+    debt = models.FloatField(null=True, blank=True, default=0)
+    balance = models.FloatField(null=True, blank=True, default=0)
 
     passport = models.ImageField(
         blank=True, null=True, upload_to="static/images/passports/")
@@ -90,12 +92,12 @@ class StudentExtra(models.Model):
 class Payment(models.Model):
     student = models.ForeignKey(
         StudentExtra, null=True, on_delete=models.SET_NULL)
-    pay = models.FloatField(default=2, null=True)
+    pay = models.FloatField(null=True)
     carpay = models.FloatField(null=True)
     schoolfees = models.FloatField(null=True)
     when_made = models.DateField(blank=True, null=True)
-    balance = models.FloatField(default=0, null=True, blank=True)
-    depth = models.FloatField(default=0, null=True, blank=True)
+    balance = models.FloatField(null=True, blank=True)
+    depth = models.FloatField(null=True, blank=True)
 
 
 class SchoolFeePayment(models.Model):

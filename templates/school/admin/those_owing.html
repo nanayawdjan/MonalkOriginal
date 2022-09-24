@@ -39,19 +39,22 @@ table {
     <div class="text">
     {% include 'school/admin/filter_list.html' %}
     <table class="tablestyle results">
-      <thead>
+      <thead class="tableheader">
         <tr>
           <th class="tablestyle">Names</th>
+          <th class="tablestyle">Phone Num</th>
           <th class="tablestyle">Amount Owing</th>
         </tr>
       </thead>
       <tbody>
+        
         {% for record in records %}
         <tr>
-            {% if record.depth != 0 %}
-          <td class="tablestyle">{{record.student}}</td>
+            {% if record.debt > 0 %}
+          <td class="tablestyle">{{record.get_name}}</td>
           
-          <td class="tablestyle">{{record.depth}}</td>
+          <td class="tablestyle">{{record.debt}}</td>
+          <td class="tablestyle">{{record.mobile}}</td>
           {% endif %}
         {% endfor %}
         </tr>

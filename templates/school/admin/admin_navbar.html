@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 {% load static %}
 <nav class="navbar navbar-inverse sidebarNavigation navbar-fixed-top navbar-custom" data-sidebarClass="navbar-inverse" >
     <div class="container-fluid">
@@ -17,16 +18,20 @@
 
 
           <li><a href="/admin-notice"style="color: #131313"><span class="glyphicon glyphicon-bullhorn"></span><b> Notice</b></a></li>
-          <li><a href="/all_crucial_buttons"style="color: #131313"><span class="glyphicon glyphicon-fire"></span><b> Buttons</b></a></li>
+          <li><a href="/all_crucial_buttons"style="color: #131313"><span class="glyphicon glyphicon-fire"></span><b> Others</b></a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          {% if user.is_authenticated %}        
-          <li><a href="/logout"style="color: #131313"><span class="glyphicon glyphicon-log-in"></span><b> Logout</b></a></li>
+          {% if user.is_authenticated %}
+            
+          <li><a href="/logout" style="color: #131313"><span class="glyphicon glyphicon-log-in"></span><b> Logout</b></a></li>
+          
           {% else %}
           <li><a href="/clicked_signup" style="color: #131313"><span class="glyphicon glyphicon-user"></span><b> Sign Up</b></a></li>
           <li><a href="studentlogin"style="color: #131313"><span class="glyphicon glyphicon-log-in"></span><b> Login</b></a></li>
+          
           {% endif %}
         </ul>
       </div>
     </div>
   </nav>
+  
