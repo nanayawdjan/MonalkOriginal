@@ -1,3 +1,4 @@
+from random import choices
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -23,13 +24,30 @@ GENDER = [
     ('Female', 'Female')
 ]
 
-classes = [
+CLASSES = [
     ('F & B', 'F & B'),
     ('P.S.', 'P.S.'),
     ('K.S.A.', 'K.S.A.'),
     ('K.S.B.', 'K.S.B.'),
     ('K.S.C.', 'K.S.C.'),
     ('L.S.A.', 'L.S.A.'),
+]
+
+FORM_OF_TRANSPORTATION = [
+    ('Bus', 'Bus'),
+    ('Walk', 'Walk')
+]
+
+PAYMENT_METHOD = [
+    ('Pay_Per_Day', 'Pay Per Day'),
+    ('School_Fees_Aside', 'School Fees Aside')
+
+]
+
+PAYMENT_CATEGORY = [
+    ('Pay_Everything', 'Pay Everything'),
+    ('Dont_Pay', 'Don\'t Pay'),
+    ('Considered', 'Considered'),
 ]
 
 
@@ -63,7 +81,7 @@ class StudentExtra(models.Model):
     mother = models.CharField(max_length=45, null=True, blank=True)
     father = models.CharField(max_length=45, null=True, blank=True)
     mobile = models.CharField(max_length=40, null=True, blank=True)
-    cl = models.CharField(max_length=10, choices=classes, default='one')
+    cl = models.CharField(max_length=10, choices=CLASSES, null=True)
     residence = models.CharField(max_length=45, null=True, choices=COMING_FROM)
     fee = models.FloatField(null=True, default=210)
     foodfee = models.FloatField(null=True, blank=True)
@@ -73,6 +91,15 @@ class StudentExtra(models.Model):
     checkifpaidterm = models.BooleanField(default=False)
     debt = models.FloatField(null=True, blank=True, default=0)
     balance = models.FloatField(null=True, blank=True, default=0)
+
+    # ||||||||||||| ADDED ON 5TH OCTOBER ||||||||||||||||
+    payment_category = models.CharField(
+        max_length=40, choices=PAYMENT_CATEGORY, null=True)
+    form_of_transportation = models.CharField(
+        max_length=40, choices=FORM_OF_TRANSPORTATION, null=True)
+    payment_method = models.CharField(
+        max_length=40, choices=PAYMENT_METHOD, null=True)
+    # ||||||||||||| ADDED ON 5TH OCTOBER ||||||||||||||||
 
     passport = models.ImageField(
         blank=True, null=True, upload_to="static/images/passports/")
@@ -91,10 +118,10 @@ class StudentExtra(models.Model):
 
 class Payment(models.Model):
     student = models.ForeignKey(
-        StudentExtra, null=True, on_delete=models.SET_NULL)
-    pay = models.FloatField(null=True)
-    carpay = models.FloatField(null=True)
-    schoolfees = models.FloatField(null=True)
+        StudentExtra, null=True, on_delete=models.SET_NULL, blank=True)
+    pay = models.FloatField(null=True, blank=True)
+    carpay = models.FloatField(null=True, blank=True)
+    schoolfees = models.FloatField(null=True, blank=True)
     when_made = models.DateField(blank=True, null=True)
     balance = models.FloatField(null=True, blank=True)
     depth = models.FloatField(null=True, blank=True)

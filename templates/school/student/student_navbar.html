@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 {% load static %}
 <nav class="navbar navbar-inverse sidebarNavigation navbar-fixed-top navbar-custom" data-sidebarClass="navbar-inverse" >
     <div class="container-fluid">
@@ -11,9 +12,8 @@
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-            <li><a href="/student-dashboard"style="color: #131313"><span class="glyphicon glyphicon-home"></span><b> Dashboard</b></a></li>
-            <li><a href="{% url 'aboutus' %}"style="color: #131313"><span class="glyphicon glyphicon-user"></span><b> AboutUs/Contactus</b></a></li>
-        </li>
+            <li><a href="{% url 'student-dashboard' %}" style="color: #131313"><span class="glyphicon glyphicon-home"></span><b> Dashboard</b></a></li>
+            <li><a href="{% url 'aboutus' %}" style="color: #131313"><span class="glyphicon glyphicon-user"></span><b> AboutUs/Contactus</b></a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           {% if user.is_authenticated %}

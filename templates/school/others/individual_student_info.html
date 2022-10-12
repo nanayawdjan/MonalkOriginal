@@ -285,10 +285,10 @@ table, td {
 
 <script src="http://netdna.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
 <script>
-	var canteen = {{dcr.thepaid}}
-	var bus = {{dbr.dbrpay}}
-	var tution = {{dtr.dtrpay}}
-	var added = canteen + bus + tution
+	var canteen = parseInt('{{dcr.thepaid}}')
+	var bus = parseInt('{{dbr.dbrpay}}')
+	var tution = parseInt('{{dtr.dtrpay}}')
+	var added = canteen + bus +tution
 	document.getElementById('calculated').innerHTML= 'TOTAL PAID: '+ added
 </script>
 {% endblock%}

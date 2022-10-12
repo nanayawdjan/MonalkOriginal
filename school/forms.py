@@ -32,7 +32,8 @@ class StudentExtraForm(forms.ModelForm):
         model = models.StudentExtra
         fields = ['roll', 'cl', 'mobile', 'fee', 'status',
                   'date_of_admission', 'date_of_birth', 'gender', 'mother', 'father',
-                  'residence', 'foodfee', 'carfee', 'passport']
+                  'residence', 'foodfee', 'carfee', 'payment_category', 'payment_method',
+                  'form_of_transportation', 'passport']
 
 
 # for teacher related form

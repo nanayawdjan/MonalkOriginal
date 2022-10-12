@@ -60,32 +60,43 @@
       <div class="form-content">
         <h1 class="student_name">{{student}}</h1>
         <div class="form-group" style="display: none;">
-          <p><b>Name</b></p>   
-          {% render_field form2.student class="form-control" placeholder="Food Payment" %}
+          {% render_field form2.student class="form-control"%}
+        </div>
+        <div class="form-group">
+          <input type="number" value="0" class="form-control" id="main_amount" onkeyup="trying()">
         </div>
             <div class="form-group">
               <p><b>Food Payment</b></p>
-              {% render_field form2.pay class="form-control" id="food" placeholder="Food Payment" %}
+              <!-- {% render_field form2.pay class="form-control" id="food" placeholder="Food Payment" %} -->
+              <input name="pay" type="number" value="0" class="form-control" id="food" placeholder="Food Payment" onkeyup="trying()" readonly>
             </div>
+            {% if student.form_of_transportation == 'Bus' %}
             <div class="form-group">
-              <p><b>Car Payment</b></p>
-              {% render_field form2.carpay class="form-control" id="car" placeholder="Car Payment" %}
+              <p id="car_top"><b>Car Payment</b></p>
+              <!-- {% render_field form2.carpay class="form-control" id="car" placeholder="Car Payment" %} -->
+              <input name="carpay" type="number" value="0" class="form-control" id="car" placeholder="Bus Fee" onkeyup="trying()" readonly>
             </div>
+            {% endif %}
+            {% if student.payment_method == 'Pay_Per_Day' %}
             <div class="form-group">
               <p><b>School Fees Payment</b></p>
-              {% render_field form2.schoolfees class="form-control" id="fees" placeholder="Daily School Fees" %}
+              <!-- {% render_field form2.schoolfees class="form-control" id="fees" placeholder="Daily School Fees" %} -->
+              <input name="schoolfees" type="number" value="0" class="form-control" id="fees" placeholder="Daily School Fees" readonly>
             </div>
+            {% endif %}
             <div class="form-group">
               <p><b>Date</b></p>
               {% render_field form2.when_made class="form-control" placeholder="Date" %}
             </div>
             <div class="form-group">
               <p><b>Balance</b></p>
-              {% render_field form2.balance class="form-control" id="balance" placeholder="Balance" %}
+              <!-- {% render_field form2.balance class="form-control" id="balance" placeholder="Balance" %} -->
+              <input name="balance" type="number" class="form-control" id="balance" placeholder="Balance" onkeyup="trying()">
             </div>
             <div class="form-group">
               <p><b>Debth</b></p>
-              {% render_field form2.depth class="form-control" id="debt" placeholder="Debth" %}
+              <!-- {% render_field form2.depth class="form-control" id="debt" placeholder="Debt" %} -->
+              <input name="depth" type="number" class="form-control" id="debt" placeholder="Debt">
             </div>
             {% for i in student_pay %}
     {% if forloop.last %}
@@ -97,66 +108,192 @@
       </div>
     </div>
   </div>
-
 </form>
 
 <script>
-  switch('{{ student.residence }}'){
-    case 'Adamsu':
-      document.getElementById("food").defaultValue = 2;
-      document.getElementById("car").defaultValue = 2;
-      document.getElementById("fees").defaultValue = 3;
-      break;
 
-    case 'Mpuasu':
-      document.getElementById("food").defaultValue = 2;
-      document.getElementById("car").defaultValue = 3;
-      document.getElementById("fees").defaultValue = 3;
-      break; 
-
-    case 'Dwenem':
-      document.getElementById("food").defaultValue = 2;
-      document.getElementById("car").defaultValue = 3;
-      document.getElementById("fees").defaultValue = 3;
-      break;
-
-    case 'Bodaa':
-      document.getElementById("food").defaultValue = 2;
-      document.getElementById("car").defaultValue = 3;
-      document.getElementById("fees").defaultValue = 3;
-      break;
-
-    case 'Kofitia':
-      document.getElementById("food").defaultValue = 2;
-      document.getElementById("car").defaultValue = 4;
-      document.getElementById("fees").defaultValue = 3;
-      break;
-
-    case 'Adiokor1':
-      document.getElementById("food").defaultValue = 2;
-      document.getElementById("car").defaultValue = 4;
-      document.getElementById("fees").defaultValue = 3;
-      break;
-
-    case 'Adiokor2':
-      document.getElementById("food").defaultValue = 2;
-      document.getElementById("car").defaultValue = 4;
-      document.getElementById("fees").defaultValue = 3;
-      break;
-
-    case 'Zezera':
-      document.getElementById("food").defaultValue = 2;
-      document.getElementById("car").defaultValue = 4;
-      document.getElementById("fees").defaultValue = 3;
-      break;
-
-    case 'Kwamepim':
-      document.getElementById("food").defaultValue = 2;
-      document.getElementById("car").defaultValue = 4;
-      document.getElementById("fees").defaultValue = 3;
-      break;  
+  // |||||||||||||||||||| CALCULATE EVERYTHING ||||||||||||||||
+  if('{{student.payment_method}}' == 'School_Fees_Aside'){
+    if('{{student.debt}}' != 'None'){
+      document.getElementById('debt').value = parseFloat('{{student.debt}}')
+    }
   }
-  
+  function trying(){
+    const SCHOOL_FEES = 3;
+    const CANTEEN = 2;
+    const BUSS_ADAMSU = 2;
+    const ADAMSU_ALL_NCON = 7;
+    const ADAMSU_WALK_NCON = 5;
+    const BUSS_MPUASU = 3;
+    const MPUASU_ALL_NCON = 8;
+
+    const BUSS_KOFITIA = 4;
+    const KOFITIA_ALL_NCON = 9;
+    const ADAMSU_ALL_NCON_ASA = 4;
+    const ADAMSU_WALK_NCON_ASA  = 2;
+    const MPUASU_ALL_NCON_ASA  = 5;
+    const KOFITIA_ALL_NCON_ASA  = 6;
+
+
+    const ALL_PERCENT = 100;
+
+    const ENTERED = document.getElementById('main_amount');
+    const FOOD = document.getElementById('food');
+    const CAR = document.getElementById('car');
+    const FEES = document.getElementById('fees');
+    const MAIN_VALUE = parseFloat(ENTERED.value);
+    const RESIDENCE = '{{student.residence}}';
+    const TRANSPORTATION = '{{student.form_of_transportation}}';
+    const METHOD = '{{student.payment_method}}';
+    const CATEGORY = '{{student.payment_category}}';
+    const BALANCE = '{{student.balance}}';
+    const DEPT = document.getElementById('dept');
+    if( METHOD == 'Pay_Per_Day' ){
+      if(RESIDENCE == 'Adamsu'){
+        // ||||||||||||| FROM ADAMSU AND PAY EVERYTHING |||||||||||||||||||||||||
+        if(CATEGORY == 'Pay_Everything'){
+          if(TRANSPORTATION == 'Bus'){
+            let[canteen, buss, school_fees] = [(CANTEEN/ADAMSU_ALL_NCON)*ALL_PERCENT, (BUSS_ADAMSU/ADAMSU_ALL_NCON)*ALL_PERCENT, (SCHOOL_FEES/ADAMSU_ALL_NCON)*ALL_PERCENT];
+            FOOD.value = (canteen/ALL_PERCENT)*MAIN_VALUE;
+            CAR.value = (buss/ALL_PERCENT)*MAIN_VALUE;
+            FEES.value = (school_fees/ALL_PERCENT)*MAIN_VALUE;
+          }else if(TRANSPORTATION == 'Walk'){
+            let[canteen, school_fees] = [(CANTEEN/ADAMSU_WALK_NCON)*ALL_PERCENT, (SCHOOL_FEES/ADAMSU_WALK_NCON)*ALL_PERCENT];
+            FOOD.value = (canteen/ALL_PERCENT)*MAIN_VALUE;
+            FEES.value = (school_fees/ALL_PERCENT)*MAIN_VALUE;
+          }    
+        }else if(CATEGORY == 'Considered'){
+          if(TRANSPORTATION == 'Bus'){           
+            let[canteen, buss, school_fees] = [(CANTEEN/ADAMSU_ALL_NCON)*ALL_PERCENT, (BUSS_ADAMSU/ADAMSU_ALL_NCON)*ALL_PERCENT, (SCHOOL_FEES/ADAMSU_ALL_NCON)*ALL_PERCENT];
+            FOOD.value = (canteen/ALL_PERCENT)*MAIN_VALUE;
+            CAR.value = (buss/ALL_PERCENT)*MAIN_VALUE;
+            FEES.value = (school_fees/ALL_PERCENT)*MAIN_VALUE;
+          }else if(TRANSPORTATION == 'Walk'){
+            let[canteen, school_fees] = [(CANTEEN/ADAMSU_WALK_NCON)*ALL_PERCENT, (SCHOOL_FEES/ADAMSU_WALK_NCON)*ALL_PERCENT];
+            FOOD.value = (canteen/ALL_PERCENT)*MAIN_VALUE;
+            FEES.value = (school_fees/ALL_PERCENT)*MAIN_VALUE;             
+          }
+        }
+      }else if(RESIDENCE == 'Mpuasu' || RESIDENCE == 'Dwenem' || RESIDENCE == 'Bodaa'){
+        if(CATEGORY == 'Pay_Everything'){
+          if(TRANSPORTATION == 'Bus'){
+            let[canteen, buss, school_fees] = [(CANTEEN/MPUASU_ALL_NCON)*ALL_PERCENT, (BUSS_MPUASU/MPUASU_ALL_NCON)*ALL_PERCENT, (SCHOOL_FEES/MPUASU_ALL_NCON)*ALL_PERCENT];
+            FOOD.value = (canteen/ALL_PERCENT)*MAIN_VALUE;
+            CAR.value = (buss/ALL_PERCENT)*MAIN_VALUE;
+            FEES.value = (school_fees/ALL_PERCENT)*MAIN_VALUE;
+          }else if(TRANSPORTATION == 'Walk'){
+            let[canteen, school_fees] = [(CANTEEN/ADAMSU_WALK_NCON)*ALL_PERCENT, (SCHOOL_FEES/ADAMSU_WALK_NCON)*ALL_PERCENT];
+            FOOD.value = (canteen/ALL_PERCENT)*MAIN_VALUE;
+            FEES.value = (school_fees/ALL_PERCENT)*MAIN_VALUE;       
+          }
+        }else if(CATEGORY == 'Considered'){
+          if(TRANSPORTATION == 'Bus'){
+            let[canteen, buss, school_fees] = [(CANTEEN/MPUASU_ALL_NCON)*ALL_PERCENT, (BUSS_MPUASU/MPUASU_ALL_NCON)*ALL_PERCENT, (SCHOOL_FEES/MPUASU_ALL_NCON)*ALL_PERCENT];
+            FOOD.value = (canteen/ALL_PERCENT)*MAIN_VALUE;
+            CAR.value = (buss/ALL_PERCENT)*MAIN_VALUE;
+            FEES.value = (school_fees/ALL_PERCENT)*MAIN_VALUE;
+          }else if(TRANSPORTATION == 'Walk'){
+            let[canteen, school_fees] = [(CANTEEN/ADAMSU_WALK_NCON)*ALL_PERCENT, (SCHOOL_FEES/ADAMSU_WALK_NCON)*ALL_PERCENT];
+            FOOD.value = (canteen/ALL_PERCENT)*MAIN_VALUE;
+            FEES.value = (school_fees/ALL_PERCENT)*MAIN_VALUE;
+          }
+        }
+      }else if(RESIDENCE == 'Kofitia' || RESIDENCE == 'Adiokor1' || RESIDENCE == 'Adiokor2' || RESIDENCE == 'Zezera' || RESIDENCE == 'Kwamepim'){
+        // COMEBACK TO U
+        if(CATEGORY == 'Pay_Everything'){
+          if(TRANSPORTATION == 'Bus'){
+            let[canteen, buss, school_fees] = [(CANTEEN/KOFITIA_ALL_NCON)*ALL_PERCENT, (BUSS_KOFITIA/KOFITIA_ALL_NCON)*ALL_PERCENT, (SCHOOL_FEES/KOFITIA_ALL_NCON)*ALL_PERCENT];
+            FOOD.value = (canteen/ALL_PERCENT)*MAIN_VALUE;
+            CAR.value = (buss/ALL_PERCENT)*MAIN_VALUE;
+            if (MAIN_VALUE % 9 == 0 || MAIN_VALUE % 3 == 0){
+            FEES.value = Math.round((school_fees/ALL_PERCENT)*MAIN_VALUE);
+            }else{
+              FEES.value = (school_fees/ALL_PERCENT)*MAIN_VALUE;
+            }
+          }else if(TRANSPORTATION == 'Walk'){
+            let[canteen, school_fees] = [(CANTEEN/ADAMSU_WALK_NCON)*ALL_PERCENT, (SCHOOL_FEES/ADAMSU_WALK_NCON)*ALL_PERCENT];
+            FOOD.value = (canteen/ALL_PERCENT)*MAIN_VALUE;
+            FEES.value = (school_fees/ALL_PERCENT)*MAIN_VALUE;          
+            }
+        }else if(CATEGORY == 'Considered'){
+          if(TRANSPORTATION == 'Bus'){
+            let[canteen, buss, school_fees] = [(CANTEEN/KOFITIA_ALL_NCON)*ALL_PERCENT, (BUSS_KOFITIA/KOFITIA_ALL_NCON)*ALL_PERCENT, (SCHOOL_FEES/KOFITIA_ALL_NCON)*ALL_PERCENT];
+            FOOD.value = (canteen/ALL_PERCENT)*MAIN_VALUE;
+            CAR.value = (buss/ALL_PERCENT)*MAIN_VALUE;
+            FEES.value = (school_fees/ALL_PERCENT)*MAIN_VALUE;
+          }else if(TRANSPORTATION == 'Walk'){
+            let[canteen, school_fees] = [(CANTEEN/ADAMSU_WALK_NCON)*ALL_PERCENT, (SCHOOL_FEES/ADAMSU_WALK_NCON)*ALL_PERCENT];
+            FOOD.value = (canteen/ALL_PERCENT)*MAIN_VALUE;
+            FEES.value = (school_fees/ALL_PERCENT)*MAIN_VALUE;
+          }
+        }
+      }
+    }else if( METHOD == 'School_Fees_Aside'){
+      if(RESIDENCE == 'Adamsu'){
+        // ||||||||||||| FROM ADAMSU AND PAY EVERYTHING |||||||||||||||||||||||||
+        if(CATEGORY == 'Pay_Everything'){
+          if(TRANSPORTATION == 'Bus'){
+            let[canteen, buss] = [(CANTEEN/ADAMSU_ALL_NCON_ASA)*ALL_PERCENT, (BUSS_ADAMSU/ADAMSU_ALL_NCON_ASA)*ALL_PERCENT];
+            FOOD.value = (canteen/ALL_PERCENT)*MAIN_VALUE;
+            CAR.value = (buss/ALL_PERCENT)*MAIN_VALUE;
+          }else if(TRANSPORTATION == 'Walk'){
+            FOOD.value = MAIN_VALUE;              
+          }    
+        }else if(CATEGORY == 'Considered'){
+          if(TRANSPORTATION == 'Bus'){
+            let[canteen, buss] = [(CANTEEN/ADAMSU_ALL_NCON_ASA)*ALL_PERCENT, (BUSS_ADAMSU/ADAMSU_ALL_NCON_ASA)*ALL_PERCENT];
+            FOOD.value = (canteen/ALL_PERCENT)*MAIN_VALUE;
+            CAR.value = (buss/ALL_PERCENT)*MAIN_VALUE;
+          }else if(TRANSPORTATION == 'Walk'){
+            let canteen = (CANTEEN/ADAMSU_WALK_NCON_ASA)*ALL_PERCENT;
+            FOOD.value = (canteen/ALL_PERCENT)*MAIN_VALUE;
+          }
+        }
+      }else if(RESIDENCE == 'Mpuasu' || RESIDENCE == 'Dwenem' || RESIDENCE == 'Bodaa'){
+        if(CATEGORY == 'Pay_Everything'){
+          if(TRANSPORTATION == 'Bus'){
+            let[canteen, buss] = [(CANTEEN/MPUASU_ALL_NCON_ASA)*ALL_PERCENT, (BUSS_MPUASU/MPUASU_ALL_NCON_ASA)*ALL_PERCENT];
+            FOOD.value = (canteen/ALL_PERCENT)*MAIN_VALUE;
+            CAR.value = (buss/ALL_PERCENT)*MAIN_VALUE;
+          }else if(TRANSPORTATION == 'Walk'){
+            let canteen = (CANTEEN/ADAMSU_WALK_NCON_ASA)*ALL_PERCENT;
+            FOOD.value = (canteen/ALL_PERCENT)*MAIN_VALUE;
+          }
+        }else if(CATEGORY == 'Considered'){
+          if(TRANSPORTATION == 'Bus'){
+            let[canteen, buss] = [(CANTEEN/MPUASU_ALL_NCON_ASA)*ALL_PERCENT, (BUSS_MPUASU/MPUASU_ALL_NCON_ASA)*ALL_PERCENT];
+            FOOD.value = (canteen/ALL_PERCENT)*MAIN_VALUE;
+            CAR.value = (buss/ALL_PERCENT)*MAIN_VALUE;
+          }else if(TRANSPORTATION == 'Walk'){
+            let canteen = (CANTEEN/ADAMSU_WALK_NCON_ASA)*ALL_PERCENT;
+            FOOD.value = (canteen/ALL_PERCENT)*MAIN_VALUE;
+          }
+        }
+      }else if(RESIDENCE == 'Kofitia' || RESIDENCE == 'Adiokor1' || RESIDENCE == 'Adiokor2' || RESIDENCE == 'Zezera' || RESIDENCE == 'Kwamepim'){
+        if(CATEGORY == 'Pay_Everything'){
+          if(TRANSPORTATION == 'Bus'){
+            let[canteen, buss] = [(CANTEEN/KOFITIA_ALL_NCON_ASA)*ALL_PERCENT, (BUSS_KOFITIA/KOFITIA_ALL_NCON_ASA)*ALL_PERCENT];
+            FOOD.value = (canteen/ALL_PERCENT)*MAIN_VALUE;
+            CAR.value = (buss/ALL_PERCENT)*MAIN_VALUE;
+          }else if(TRANSPORTATION == 'Walk'){
+            let canteen = (CANTEEN/ADAMSU_WALK_NCON_ASA)*ALL_PERCENT;
+            FOOD.value = (canteen/ALL_PERCENT)*MAIN_VALUE;
+          }
+        }else if(CATEGORY == 'Considered'){
+          if(TRANSPORTATION == 'Bus'){
+            let[canteen, buss] = [(CANTEEN/KOFITIA_ALL_NCON_ASA)*ALL_PERCENT, (BUSS_KOFITIA/KOFITIA_ALL_NCON_ASA)*ALL_PERCENT];
+            FOOD.value = (canteen/ALL_PERCENT)*MAIN_VALUE;
+            CAR.value = (buss/ALL_PERCENT)*MAIN_VALUE;
+          }else if(TRANSPORTATION == 'Walk'){
+            let canteen = (CANTEEN/ADAMSU_WALK_NCON_ASA)*ALL_PERCENT;
+            FOOD.value = (canteen/ALL_PERCENT)*MAIN_VALUE;
+          }
+        }
+      }
+    }
+  }
+
 </script>
 
 {% endblock content %}
+  

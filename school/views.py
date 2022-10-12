@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, reverse
-from . import forms, models
+from .import forms, models
 from django.db.models import Sum
 from django.contrib.auth.models import Group
 from django.http import HttpResponseRedirect
@@ -438,12 +438,11 @@ def teacher_notice_view(request):
 
 # FOR STUDENT AFTER THEIR Loginnnnnnnnnnnnnnnnnnnnn
 @login_required(login_url='login')
-@user_passes_test(is_admin)
 def student_dashboard_view(request):
     studentdata = models.StudentExtra.objects.all().filter(
         status=True, user_id=request.user.id)
     notice = models.Notice.objects.all()
-    mydict = {
+    context = {
         'roll': studentdata[0].roll,
         'gender': studentdata[0].gender,
         'mother': studentdata[0].mother,
@@ -452,10 +451,11 @@ def student_dashboard_view(request):
         'date_of_birth': studentdata[0].date_of_birth,
         'date_of_admission': studentdata[0].date_of_admission,
         'cl': studentdata[0].cl,
-        'fee': studentdata[0].fee,
-        'notice': notice
+        'notice': notice,
+        'debt': studentdata[0].debt,
+        'balance': studentdata[0].balance
     }
-    return render(request, 'school/student/student_dashboard.html', context=mydict)
+    return render(request, 'school/student/student_dashboard.html', context)
 
 
 # for payment=========================================================================================
@@ -545,10 +545,10 @@ def day_pay_view(request, pk):
     if request.method == 'POST':
         form2 = forms.PaymentForm(request.POST)
         if form2.is_valid():
-            debt = form2.cleaned_data['depth']
-            balance = form2.cleaned_data['balance']
-            student.balance = balance
-            student.debt = debt
+            deb = form2.cleaned_data['depth']
+            bala = form2.cleaned_data['balance']
+            student.balance = bala
+            student.debt = deb
             student.checkifpaiddaily = True
             student.save()
             form2.save()
