@@ -3,9 +3,6 @@
 {% block content %}
 
 <style>
-      body{
-    background: #bba14f;
-  }
   table, td, th {
   border: 2px solid white;
   padding-top: 10px;
@@ -38,7 +35,6 @@ table {
 
 </style>
 <section class="hom"> 
-  <div class="text">
     {% include 'school/admin/filter_list.html' %}
     <table class="tablestyle results">
       <thead class="tableheader">
@@ -68,24 +64,33 @@ table {
       </tbody>
     </table>
     <h1 id="income"></h1>
-  </div>
 </section>
 
 
 <script>
-  {% for record in dfmr %}  
-    {% if forloop.last %}
-      sum1 = {{record.sum}}
-      sum2 = {{record.sum2}}
-      sum3 = {{record.sum3}}
-    {% endif %}
-  {% endfor %}
-  {% for record in dsmr %}  
-    {% if forloop.last %}
-      sum4 = {{record.sum4}}
-    {% endif %}
-  {% endfor %}
-  var added = sum1+sum2+sum3+sum4
+  '{% for record in dfmr %}'  
+    '{% if forloop.last %}'
+      var sum1 = parseInt('{{record.sum}}')
+      var sum2 = parseInt('{{record.sum2}}')
+      var sum3 = parseInt('{{record.sum3}}')
+      var when_made = '{{record.when_made}}'
+    '{% endif %}'
+  '{% endfor %}'
+  '{% for record in dsmr %}'  
+    '{% if forloop.last %}'
+      var sum4 = parseInt('{{record.sum4}}')
+      var schoolfeesdate = '{{record.when_made}}'
+    '{% endif %}'
+  '{% endfor %}'
+  if(typeof sum4 !== 'undefined'){
+     if (when_made == schoolfeesdate){
+      var added = sum1+sum2+sum3+sum4
+     }else{
+      var added = sum1+sum2+sum3
+     }
+  }else{
+    var added = sum1+sum2+sum3
+  }
   document.getElementById("income").innerHTML="Total Payment For Today: " + added;
 
 </script>

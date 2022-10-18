@@ -1,5 +1,19 @@
 {% load static %}
-<nav class="navbar navbar-inverse sidebarNavigation navbar-fixed-top navbar-custom" data-sidebarClass="navbar-inverse" >
+<style>
+  @media screen and (max-width: 768px){
+    .navbar-brand{
+      position: absolute;
+      right: 0px;
+      left: 90%;
+    }
+    .navbar-right{
+      position: absolute;
+      bottom: 0px;
+      top: 90%;
+    }
+  }
+  </style>
+<nav class="navbar navbar-inverse sidebarNavigation navbar-fixed-top navbar-custom">
     <div class="container-fluid">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle left-navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -11,16 +25,15 @@
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-            <li><a href="/teacher-dashboard"style="color: #131313"><span class="glyphicon glyphicon-home"></span><b> Dashboard</b></a></li>
-            <li><a href="/teacher-notice"style="color: #131313"><span class="glyphicon glyphicon-education"></span><b> Note</b></a></li>
-        </li>
+            <li><a href="/teacher-dashboard" style="color: #131313"><span class="glyphicon glyphicon-home"></span><b> Dashboard</b></a></li>
+            <li><a href="/teacher-notice" style="color: #131313"><span class="glyphicon glyphicon-education"></span><b> Note</b></a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           {% if user.is_authenticated %}        
-          <li><a href="/logout"style="color: #131313"><span class="glyphicon glyphicon-log-in"></span><b> Logout</b></a></li>
+          <li><a href="/logout" style="color: #131313"><span class="glyphicon glyphicon-log-in"></span><b> Logout</b></a></li>
           {% else %}
           <li><a href="/clicked_signup" style="color: #131313"><span class="glyphicon glyphicon-user"></span><b> Sign Up</b></a></li>
-          <li><a href="studentlogin"style="color: #131313"><span class="glyphicon glyphicon-log-in"></span><b> Login</b></a></li>
+          <li><a href="studentlogin" style="color: #131313"><span class="glyphicon glyphicon-log-in"></span><b> Login</b></a></li>
           {% endif %}
         </ul>
       </div>

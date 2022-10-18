@@ -98,17 +98,17 @@
 </form>
 
 <script>
-  {% for chec in student_pay %}
-  {% if chec.troll == True %}
+  '{% for chec in student_pay %}'
+  '{% if chec.troll == True %}'
     document.getElementById('troll').checked = true;
-  {% endif %}
-  {% if chec.soap == True %}
+  '{% endif %}'
+  '{% if chec.soap == True %}'
     document.getElementById('soap').checked = true;
-  {% endif %}
-  {% if chec.broom == True %}
+  '{% endif %}'
+  '{% if chec.broom == True %}'
     document.getElementById('broom').checked = true;
-  {% endif %}
-  {% endfor %}
+  '{% endif %}'
+  '{% endfor %}'
 
   var paid = '{{addedup.thesum}}'
   
