@@ -14,7 +14,7 @@
     }
   }
   </style>
-<nav class="navbar navbar-inverse sidebarNavigation navbar-fixed-top navbar-custom" data-sidebarClass="navbar-inverse" >
+<nav class="navbar navbar-inverse sidebarNavigation navbar-fixed-top navbar-custom">
     <div class="container-fluid">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle left-navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -32,10 +32,10 @@
         <ul class="nav navbar-nav navbar-right">
           {% if user.is_authenticated %}
           <li><a style="color: #131313"><span class="glyphicon "></span><b>Hello, {{request.user.first_name}}</b></a></li>      
-          <li><a href="/logout"style="color: #131313"><span class="glyphicon glyphicon-log-in"></span><b> Logout</b></a></li>
+          <li><a href="/logout" style="color: #131313"><span class="glyphicon glyphicon-log-in"></span><b> Logout</b></a></li>
           {% else %}
           <li><a href="/clicked_signup" style="color: #131313"><span class="glyphicon glyphicon-user"></span><b> Sign Up</b></a></li>
-          <li><a href="studentlogin"style="color: #131313"><span class="glyphicon glyphicon-log-in"></span><b> Login</b></a></li>
+          <li><a href="studentlogin" style="color: #131313"><span class="glyphicon glyphicon-log-in"></span><b> Login</b></a></li>
           {% endif %}
         </ul>
       </div>
