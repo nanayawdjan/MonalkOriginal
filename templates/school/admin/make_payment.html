@@ -49,6 +49,12 @@
   <div class="text">
 
     {% include 'school/admin/filter_list.html' %}
+
+    <form action="" method="POST" id="resetdailypayment">
+      {% csrf_token %} 
+      <input type="button" name="SubmitButton" value="Reset Payment" id="dailyresetbtn">
+  </form>
+
     <table class="table table-bordered border-primary results">
       <thead class="stay">
         <tr>
@@ -71,5 +77,14 @@
     </table>
   </div>
 </section>
-
+<script>
+  var bttn = document.getElementById('dailyresetbtn');
+  bttn.addEventListener('click', function(){
+      if (confirm('Do you want to reset yesterdays payment')){
+          document.getElementById('resetdailypayment').submit()
+      }else{
+          return false;
+      }
+  })
+</script>
 {% endblock%}

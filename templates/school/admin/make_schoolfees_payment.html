@@ -82,6 +82,10 @@
 </style>
 <section class="hom"> 
     <div class="text">
+      <form action="" method="POST" id="resettermpayform">
+        {% csrf_token %}
+        <input type="button" id="resettermpay" value="Reset School Fees">
+      </form>
         {% include 'school/admin/filter_list.html' %}
         <table class="table table-bordered border-primary results">
         <thead class="tableheader">
@@ -106,4 +110,14 @@
 </table>
 </div>
 </section>
+<script>
+  var bttn = document.getElementById('resettermpay');
+  bttn.addEventListener('click', function(){
+    if(confirm('Do you want to reset term payment')){
+      document.getElementById('resettermpayform').submit();
+    }else{
+      return false;
+    }
+  })
+</script>
 {% endblock content %}

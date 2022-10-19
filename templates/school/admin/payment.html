@@ -60,7 +60,7 @@
           {% render_field form2.student class="form-control"%}
         </div>
         <div class="form-group">
-          <input type="number" value="0" class="form-control" id="main_amount" onkeyup="trying()">
+          <input type="number" step="any" value="0" class="form-control" id="main_amount" onkeyup="trying()">
         </div>
             <div class="form-group">
               <p><b>Food Payment</b></p>
@@ -88,19 +88,17 @@
             <div class="form-group">
               <p><b>Balance</b></p>
               <!-- {% render_field form2.balance class="form-control" id="balance" placeholder="Balance" %} -->
-              <input name="balance" type="number" class="form-control" id="balance" placeholder="Balance" onkeyup="trying()">
+              <input name="balance" type="number" step="any" class="form-control" id="balance" placeholder="Balance" onkeyup="trying()">
             </div>
             <div class="form-group">
               <p><b>Debth</b></p>
               <!-- {% render_field form2.depth class="form-control" id="debt" placeholder="Debt" %} -->
-              <input name="depth" type="number" class="form-control" id="debt" placeholder="Debt">
+              <input name="depth" type="number" step="any" class="form-control" id="debt" placeholder="Debt">
             </div>
-            {% for i in student_pay %}
-    {% if forloop.last %}
-    <h3>ML: {{i.balance}}</h3>
-    <h3>AR: {{i.depth}}</h3>
-    {% endif %}
-  {% endfor %}
+
+    <h3>ML: {{student.balance}}</h3>
+    <h3>AR: {{student.debt}}</h3>
+
   <button type="submit" class="btnSubmit">Pay</button>
       </div>
     </div>

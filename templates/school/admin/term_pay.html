@@ -85,11 +85,9 @@
             {% render_field form.broom id="broom" class="form-control" %}
           </div>
           <button type="submit" class="btnSubmit">Pay</button>
-          {% for i in student_pay %}
-      {% if forloop.last %}
-      <h3>AR: {{i.debth}}</h3>
-      {% endif %}
-    {% endfor %}
+
+      <h3>AR: {{student.debt}}</h3>
+
       </div>
       
     </div>

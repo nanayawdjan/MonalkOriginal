@@ -75,8 +75,6 @@ urlpatterns = [
          name='admin-add-student'),
     path('admin-view-student', views.admin_view_student_view,
          name='admin-view-student'),
-    path('delete-student-from-school/<int:pk>',
-         views.delete_student_from_school_view, name='delete-student-from-school'),
     path('delete-student/<int:pk>',
          views.delete_student_view, name='delete-student'),
     path('update-student/<int:pk>',
@@ -101,13 +99,12 @@ urlpatterns = [
 
 
     path('delete-notice/<str:pk>', views.delete_notice_view, name='delete-notice'),
-    path('resetpayment/', views.reset_daily_payment_button, name='resetpayment'),
     path('resetsinglepayment/<int:pk>',
          views.reset_single_payment, name='resetsinglepayment'),
     path('reset_students_payment/',
          views.reset_students_view, name='reset_students'),
-    path('all_crucial_buttons/', views.all_crucial_buttons_view,
-         name='all_crucial_buttons'),
+    #     path('all_crucial_buttons/', views.all_crucial_buttons_view,
+    #          name='all_crucial_buttons'),
     path('student-with-debth', views.those_having_our_money,
          name='student-with-debth'),
 
@@ -121,8 +118,6 @@ urlpatterns = [
          name='record-of-all-school-fee-payment'),
     path('delete-school-fee-pay/<int:pk>',
          views.deleteSchoolFeePayView, name='delete-school-fee-pay'),
-    path('reset-term-schoolfees', views.reset_term_schoolfees,
-         name='reset-term-schoolfees'),
 
     # ================================== END OF SCHOOL FEES PAYMENT ================================
     # ================================== END OF SCHOOL FEES PAYMENT ================================

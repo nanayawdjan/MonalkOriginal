@@ -2,7 +2,6 @@
 {% extends 'school/admin/adminbase.html' %}
 
 {% block content %}
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <style>
 a:link {
   text-decoration: none;
@@ -95,6 +94,8 @@ table, td {
 	.deleteite{
 		background: #ee0b1b;
 		color: #fff;
+		border: none;
+		border-radius: 5px;
 		cursor: pointer;
 		padding: 5px;
 
@@ -121,17 +122,34 @@ table, td {
 	h3 {
 		font-weight: bold;
 	}
+	.update, .updat{
+		text-align: center;
+		margin: 0 200% 0 45%;
+		display: inline-flex;
+		justify-content: center;
+	}
+	.bttn{
+		text-decoration: none;
+		border-radius: 5px;
+		padding: 4px;
+		background-color: #30a33a;
+	}
+
 	@media(max-width: 615px) {
 		.last-record-of-money{
 			display: grid;
 			text-align: center;	
 		}
+		.update, .updat{
+			display: inline-flex;
+			margin: 0 50% 0 34%;
+		}
 	}
 </style>
 
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
-<body>
-	<h1 class="hedy">This is {{student.get_name}}</h1>
+<h1 class="hedy">This is {{student.get_name}}</h1>
 <div class="container">
 <div class="row">
   <div class="col-md-4 col-xl-3">
@@ -246,6 +264,13 @@ table, td {
   </div>
 </div>
 </div>
+<div class="update">
+	<a href="{% url 'update-student' student.id %}" class="updat bttn">Update</a>
+	<form method="POST" id="deletestudentform">
+		{% csrf_token %}
+		<input type="button" value="Delete" id="deletestudent" class="updat deleteite">
+	</form>
+</div>
 <div class="last-record-of-money">
 	<!-- None and dbr.dbrpay == None and dtr.dtrpay == None -->
 	{% if dcr.thepaid == None%}
@@ -276,19 +301,42 @@ table, td {
 {% for recor in pay_record %}
 <tr>
 	<td class="tablestyle"><strong>{{recor.when_made}}</strong></td>
-	<td class="tablestyle"><strong>{{recor.pay}}</strong></td>
-	<td class="tablestyle"><strong>{{recor.schoolfees}}</strong></td>
-	<td class="tablestyle"><strong>{{recor.carpay}}</strong></td>
+	{% if recor.pay == None %}
+	<td class="tablestyle"><strong>0</strong></td>
+	{% else %}
+	<td class="tablestyle"><strong>{{recor.pay|floatformat}}</strong></td>
+	{% endif %}
+	{% if recor.schoolfees == None %}
+	<td class="tablestyle"><strong>0</strong></td>
+	{% else %}
+	<td class="tablestyle"><strong>{{recor.schoolfees|floatformat}}</strong></td>
+	{% endif %}
+	{% if recor.carpay == None %}
+	<td class="tablestyle"><strong>0</strong></td>
+	{% else %}
+	<td class="tablestyle"><strong>{{recor.carpay|floatformat}}</strong></td>
+	{% endif %}
 	<td class="tablestyle"><a href="{% url 'delete-individual-pay' recor.id %}" class="deleteite" >DELETE</a></td>
+	
 </tr>
 {% endfor %}
-
+</tbody>
+</table>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
 <script>
 	var canteen = parseInt('{{dcr.thepaid}}')
 	var bus = parseInt('{{dbr.dbrpay}}')
 	var tution = parseInt('{{dtr.dtrpay}}')
 	var added = canteen + bus +tution
-	document.getElementById('calculated').innerHTML= 'TOTAL PAID: '+ added
+	document.getElementById('calculated').innerHTML= 'TOTAL PAID: '+ added;
+
+	var bttn = document.getElementById('deletestudent');
+	bttn.addEventListener('click', function(){
+		if (confirm('Are you sure you want to delete this student? ')){
+			document.getElementById('deletestudentform').submit();
+		}else{
+			return false;
+		}
+	})
 </script>
 {% endblock%}

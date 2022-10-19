@@ -52,17 +52,21 @@ table {
         {% for recor in record %}
         <tr>
           <td class="tablestyle">{{recor.student}}</td>
-          <td class="tablestyle">{{recor.pay}}</td>
+          {% if recor.pay == None %}
+          <td class="tablestyle">0</td>
+          {% else %}
+          <td class="tablestyle">{{recor.pay|floatformat}}</td>
+          {% endif %}
           {% if recor.carpay == None %}
           <td class="tablestyle">0</td>
           {% else %}
-          <td class="tablestyle">{{recor.carpay}}</td>
+          <td class="tablestyle">{{recor.carpay|floatformat}}</td>
           {% endif %}
 
           {% if recor.schoolfees == None %}
           <td class="tablestyle">0</td>
           {% else %}
-          <td class="tablestyle">{{recor.schoolfees}}</td>
+          <td class="tablestyle">{{recor.schoolfees|floatformat}}</td>
           {% endif %}
           <td class="tablestyle">{{recor.when_made}}</td>
           <td class="tablestyle"><a class="btn btn-danger btn-xs" href="{% url 'delete-payment' recor.id %}"><span class="glyphicon glyphicon-trash"></span></a></td>

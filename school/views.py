@@ -1,4 +1,6 @@
+from multiprocessing import context
 from django.shortcuts import render, redirect, reverse
+from django.http import HttpResponse
 from .import forms, models
 from django.db.models import Sum
 from django.contrib.auth.models import Group
@@ -330,18 +332,6 @@ def admin_view_student_view(request):
 
 @login_required(login_url='login')
 @user_passes_test(is_admin)
-def delete_student_from_school_view(request, pk):
-    student = models.StudentExtra.objects.get(id=pk)
-    user = models.User.objects.get(id=student.user_id)
-    if request.method == 'POST':
-        user.delete()
-        student.delete()
-        return redirect('admin-view-student')
-    return render(request, 'school/others/confirmations/deleting-student.html')
-
-
-@login_required(login_url='login')
-@user_passes_test(is_admin)
 def delete_student_view(request, pk):
     student = models.StudentExtra.objects.get(id=pk)
     user = models.User.objects.get(id=student.user_id)
@@ -369,7 +359,7 @@ def update_student_view(request, pk):
             f2 = form2.save(commit=False)
             f2.status = True
             f2.save()
-            return redirect('admin-view-student')
+            return redirect('individual_student_info', pk)
     return render(request, 'school/admin/admin_update_student.html', context=mydict)
 
 
@@ -470,6 +460,12 @@ def individual_student_info_view(request, pk):
     dbr = pay_record.aggregate(dbrpay=Sum('carpay'))
     dtr = pay_record.aggregate(dtrpay=Sum('schoolfees'))
     bala = models.Payment.objects.all()
+
+    # user = models.User.objects.get(id=student.user_id)
+    if request.method == 'POST':
+        student.status = False
+        student.save()
+        return redirect('admin-view-student')
     context = {
         'student': student,
         'pay_record': pay_record,
@@ -514,11 +510,11 @@ def sendEmail(request):
     return render(request, 'school/others/aboutus.html')
 
 
-@login_required(login_url='login')
-@user_passes_test(is_admin)
-def all_crucial_buttons_view(request):
-    context = {}
-    return render(request, 'school/admin/all_crucial_buttons.html', context)
+# @login_required(login_url='login')
+# @user_passes_test(is_admin)
+# def all_crucial_buttons_view(request):
+#     context = {}
+#     return render(request, 'school/admin/all_crucial_buttons.html', context)
 
 
 # ================================= DAILY FEES PAYMENT ================================ #
@@ -530,6 +526,10 @@ def all_crucial_buttons_view(request):
 def make_payment(request):
     students = models.StudentExtra.objects.all().filter(
         status=True, checkifpaiddaily=False)
+    resetall = models.StudentExtra.objects.filter(checkifpaiddaily=True)
+    if request.method == 'POST':
+        resetall.update(checkifpaiddaily=False)
+        return redirect('make-payment')
     context = {
         'students': students,
     }
@@ -603,22 +603,12 @@ def delete_individual_pay_view(request, pk):
 
 @login_required(login_url='login')
 @user_passes_test(is_admin)
-def reset_daily_payment_button(request):
-    resetall = models.StudentExtra.objects.filter(checkifpaiddaily=True)
-    if request.method == 'POST':
-        resetall.update(checkifpaiddaily=False)
-        return redirect('make-payment')
-    return render(request, 'school/others/confirmations/reset-daily-payment-fees.html')
-
-
-@login_required(login_url='login')
-@user_passes_test(is_admin)
 def reset_students_view(request):
     students = models.StudentExtra.objects.filter(checkifpaiddaily=True)
     context = {
         'students': students
     }
-    return render(request, 'school/admin/resetted_students_view.html', context)
+    return render(request, 'school/admin/reset_students_view.html', context)
 
 
 @login_required(login_url='login')
@@ -643,8 +633,13 @@ def reset_single_payment(request, pk):
 @login_required(login_url='login')
 @user_passes_test(is_admin)
 def makeSchoolFeesPaymentView(request):
-    students = models.StudentExtra.objects.all().filter(
-        status=True, checkifpaidterm=False)
+    students = models.StudentExtra.objects.filter(
+        status=True, checkifpaidterm=False, payment_method='School_Fees_Aside')
+    resetall = models.StudentExtra.objects.filter(checkifpaidterm=True)
+    if request.method == 'POST':
+        resetall.update(checkifpaidterm=False)
+        students.update(debt=210)
+        return redirect('school-fees-payment')
     context = {'students': students}
     return render(request, 'school/admin/make_schoolfees_payment.html', context)
 
@@ -659,6 +654,8 @@ def termPayView(request, pk):
     if request.method == 'POST':
         form = forms.SchoolFeePaymentForm(request.POST)
         if form.is_valid():
+            deb = form.cleaned_data['debth']
+            student.debt = deb
             if form.cleaned_data['debth'] == 0 and form.cleaned_data['troll'] == True and form.cleaned_data['soap'] == True and form.cleaned_data['broom'] == True:
                 student.checkifpaidterm = True
             student.save()
@@ -687,16 +684,6 @@ def deleteSchoolFeePayView(request, pk):
     payment = models.SchoolFeePayment.objects.get(id=pk)
     payment.delete()
     return redirect('record-of-all-school-fee-payment')
-
-
-@login_required(login_url='login')
-@user_passes_test(is_admin)
-def reset_term_schoolfees(request):
-    resetall = models.StudentExtra.objects.filter(checkifpaidterm=True)
-    if request.method == 'POST':
-        resetall.update(checkifpaidterm=False)
-        return redirect('school-fees-payment')
-    return render(request, 'school/others/confirmations/reset-term-schoolfees.html')
 
 
 # ================================= END SCHOOL FEES PAYMENT ================================ #

@@ -49,13 +49,13 @@ table {
         {% for recod in dfmr %}
         <tr>
           <td class="tablestyle">{{recod.when_made}}</td>
-          <td class="tablestyle">{{recod.sum}}</td>
+          <td class="tablestyle">{{recod.sum|floatformat}}</td>
           {% if recod.sum3 == None or recod.sum2 == None %}
           <td class="tablestyle">0</td>
           <td class="tablestyle">0</td>
           {% else %}
-          <td class="tablestyle">{{recod.sum2}}</td>
-          <td class="tablestyle">{{recod.sum3}}</td>        
+          <td class="tablestyle">{{recod.sum2|floatformat}}</td>
+          <td class="tablestyle">{{recod.sum3|floatformat}}</td>        
           {% endif %}
           
         </tr>

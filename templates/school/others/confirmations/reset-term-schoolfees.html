@@ -1,7 +1,0 @@
-<!DOCTYPE html>
-<h1>Are u sure you want to reset</h1>
-<form method="POST">
-    {% csrf_token %}
-    <button><a href="{% url 'admin-student' %}">Cancel</a></button>
-    <input type="submit" value="Confirm">
-</form>
